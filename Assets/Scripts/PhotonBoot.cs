@@ -82,11 +82,11 @@ public class PhotonBoot : MonoBehaviourPunCallbacks
 
         if (!isOffline)
         {
-            PhotonNetwork.Instantiate("Player/PhotonPlayer", Vector3.zero, Quaternion.identity, 0);
+            PhotonNetwork.Instantiate("Player/Player_LED", Vector3.zero, Quaternion.identity, 0);
         }
         else
         {
-            PhotonNetwork.Instantiate("Player/PhotonAvatarOffline", Vector3.zero, Quaternion.identity, 0);
+            PhotonNetwork.Instantiate("Player/Player_LED", Vector3.zero, Quaternion.identity, 0);
         }
 
         connectedToRoom = true;
