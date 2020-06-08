@@ -6,10 +6,17 @@ using Photon.Pun;
 public class PhotonPlayerController : MonoBehaviour
 {
     private PhotonView photonView;
+    public static PhotonPlayerController localPlayer;
 
     void Start()
     {
         photonView = GetComponent<PhotonView>();
+
+        if (photonView.IsMine) {
+            // this is the local player, can't be overwritten.
+            localPlayer = this;
+        }
+        
 
     }
 
