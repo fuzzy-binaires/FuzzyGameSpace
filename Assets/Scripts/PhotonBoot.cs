@@ -7,9 +7,12 @@ using TMPro;
 using NaughtyAttributes;
 using UnityEngine.SceneManagement;
 
+
 public class PhotonBoot : MonoBehaviourPunCallbacks
 {
     public static PhotonBoot Instance;
+    public static PUN2_Chat chat;
+
     [SerializeField] Photon.Realtime.TypedLobby lobby = Photon.Realtime.TypedLobby.Default;
     [SerializeField] string roomName = "FuzzyGameSpace";
     [SerializeField] bool isOffline = false;
@@ -21,7 +24,10 @@ public class PhotonBoot : MonoBehaviourPunCallbacks
     void Start()
     {
         Instance = this;
+
         Connect();
+
+        
     }
 
     public void Connect()
