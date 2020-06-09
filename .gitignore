@@ -47,3 +47,4 @@ Corridor/Library/ShaderCache/
 Corridor/Library/metadata/
 
 Assets/Photon/PhotonUnityNetworking/Code/Editor/*
+Assets/Photon/PhotonUnityNetworking/Resources/PhotonServerSettings.asset
