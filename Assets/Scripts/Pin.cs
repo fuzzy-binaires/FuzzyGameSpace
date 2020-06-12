@@ -1,5 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
+using Photon.Pun;
+using Photon.Realtime;
 using UnityEngine;
 
 public class Pin : MonoBehaviour
@@ -8,6 +10,9 @@ public class Pin : MonoBehaviour
     private bool isEmpty;
     private string description;
     private Collider thisCollider;
+
+    private GameObject pinConnector;
+    private bool pinConnectorMoving;
 
     public PinController pinController;
 
@@ -26,13 +31,28 @@ public class Pin : MonoBehaviour
 
         thisCollider = GetComponent<Collider>();
 
+        isEmpty = true;
+
+        pinConnectorMoving = false;
+
 
     }
 
 
     void Update()
     {
-        
+        // ANIMATION OF PinConnector - BEGIN
+        if (pinConnectorMoving)
+        {
+            pinConnector.transform.Translate(0, -0.02f, 0); // HOW ABOUT A NICE ACCELERATION CURVE HERE, HEIN..!!!!
+
+            if(pinConnector.transform.position.y <= 0)
+            {
+                pinConnectorMoving = false;
+            }
+        }
+        // ANIMATION OF PinConnector - END
+
     }
 
 
@@ -54,6 +74,21 @@ public class Pin : MonoBehaviour
     public string getDescription()
     {
         return description;
+    }
+
+    public bool getIsEmpty()
+    {
+        return isEmpty;
+    }
+
+    public void setIsEmpty(bool state)
+    {
+        isEmpty = state;
+
+        if (!isEmpty)// && !pinConnectorMoving)
+        {
+            triggerPinConnectorAnimation();
+        }
     }
 
     // COLLISION --------------
@@ -81,6 +116,13 @@ public class Pin : MonoBehaviour
         }
     }
 
+    private void triggerPinConnectorAnimation()
+    {
+        Vector3 whereItStarts = transform.gameObject.transform.position + new Vector3(0,4f,0);
+        pinConnector = PhotonNetwork.InstantiateSceneObject("Board/PinConnector", whereItStarts, Quaternion.identity, 0);
+        pinConnectorMoving = true;
+
+    }
 
 
 }

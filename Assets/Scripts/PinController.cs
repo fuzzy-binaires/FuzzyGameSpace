@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class PinController : MonoBehaviour
 {
-    int selectedPin = -1;
+    private int selectedPin = -1;
     public GameObject pinSelectedGizmo;
 
     void Start()
@@ -13,12 +13,41 @@ public class PinController : MonoBehaviour
 
         //pinSelectedGizmo = GameObject.Find("pinSelectedGizmo");
         pinSelectedGizmo.transform.position = new Vector3 (0, -1, 0);
+        StartCoroutine("rotatePinGizmoForeeeeever");
     }
 
     // Update is called once per frame
     void Update()
     {
-        
+
+        // ---- USER ACTS AGAINST A PIN - BEGIN
+        if (Input.GetKeyUp(KeyCode.Return))
+        {
+            if(selectedPin != -1)
+            {
+                Pin pin = getPinById(selectedPin).GetComponent<Pin>();
+                Debug.Log("Pin " + selectedPin + " isEmpty = " + pin.getIsEmpty());
+
+                if (pin.getIsEmpty())
+                {
+                    // LAUNCH HTML INTERFACE FOR => ADDING A RESOURCE
+                    Debug.Log("-|| USER WANTS TO ADD TO PIN " + selectedPin);
+                    pin.setIsEmpty(false);
+
+                }
+                else
+                {
+                    // LAUNCH HTML INTERFACE FOR => READING A RESOURCE
+                    Debug.Log("-|| USER READS PIN " + selectedPin);
+                }
+
+
+                Debug.Log("Pin " + selectedPin + " isEmpty = " + pin.getIsEmpty());
+            }
+        }
+        // ---- USER ACTS AGAINST A PIN - END
+
+
     }
 
     private void setupPins()
@@ -51,9 +80,9 @@ public class PinController : MonoBehaviour
     private void updatePinSelectionGizmo()
     {
         Vector3 pinPos = getPinByName(selectedPin).transform.position;
-        pinSelectedGizmo.transform.position = pinPos + new Vector3(0,0.4f,0);
+        pinSelectedGizmo.transform.position = pinPos + new Vector3(0,0.5f,0);
 
-        Debug.Log("Updating Gizmo to Pin: " + selectedPin);
+        //Debug.Log("Updating Gizmo to Pin: " + selectedPin);
 
     }
 
@@ -75,4 +104,22 @@ public class PinController : MonoBehaviour
     {
         return this.gameObject.transform.GetChild(id).gameObject;
     }
+
+
+    private IEnumerator rotatePinGizmoForeeeeever()
+    {
+
+        GameObject thunderBolt = pinSelectedGizmo.transform.GetChild(0).gameObject;
+
+        while (true)
+        {
+            thunderBolt.transform.Rotate(0, 5, 0);
+
+            // WAIT SO MANY SECONDS TO RE-EXECUTE
+            yield return new WaitForSeconds(0.01f);
+
+        }
+    }
+
+
 }
