@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 705507994}
-  m_IndirectSpecularColor: {r: 0.44657856, g: 0.49641234, b: 0.5748172, a: 1}
+  m_IndirectSpecularColor: {r: 0.44657874, g: 0.49641275, b: 0.5748172, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -1138,6 +1138,7 @@ GameObject:
   m_Component:
   - component: {fileID: 360918379}
   - component: {fileID: 360918380}
+  - component: {fileID: 360918381}
   m_Layer: 0
   m_Name: chatArea
   m_TagString: Untagged
@@ -1172,6 +1173,18 @@ BoxCollider:
   serializedVersion: 2
   m_Size: {x: 1.596804, y: 0.52952504, z: 1.5578173}
   m_Center: {x: -0.005621493, y: 0.2550825, z: 0.019657075}
+--- !u!114 &360918381
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 360918378}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5190d1aeca0ed4fcd8963f14b52dab2e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &373074150
 GameObject:
   m_ObjectHideFlags: 0
@@ -3052,7 +3065,7 @@ Transform:
   m_Children:
   - {fileID: 2016192958}
   m_Father: {fileID: 0}
-  m_RootOrder: 3
+  m_RootOrder: 4
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &951185431
 GameObject:
@@ -4761,7 +4774,7 @@ Transform:
   - {fileID: 2084839654}
   - {fileID: 1144726980}
   m_Father: {fileID: 0}
-  m_RootOrder: 1
+  m_RootOrder: 2
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1435005114
 GameObject:
@@ -7728,7 +7741,7 @@ PrefabInstance:
     - target: {fileID: 3525866328913332712, guid: 92b5a3ffaac4549d68dea1033cd04d77,
         type: 3}
       propertyPath: m_RootOrder
-      value: 2
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 3525866328913332712, guid: 92b5a3ffaac4549d68dea1033cd04d77,
         type: 3}

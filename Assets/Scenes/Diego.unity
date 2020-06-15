@@ -1185,6 +1185,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5190d1aeca0ed4fcd8963f14b52dab2e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  isChatGuiVisible: 0
 --- !u!1 &373074150
 GameObject:
   m_ObjectHideFlags: 0
