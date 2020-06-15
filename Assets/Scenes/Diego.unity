@@ -1138,6 +1138,7 @@ GameObject:
   m_Component:
   - component: {fileID: 360918379}
   - component: {fileID: 360918380}
+  - component: {fileID: 360918381}
   m_Layer: 0
   m_Name: chatArea
   m_TagString: Untagged
@@ -1172,6 +1173,18 @@ BoxCollider:
   serializedVersion: 2
   m_Size: {x: 1.596804, y: 0.52952504, z: 1.5578173}
   m_Center: {x: -0.005621493, y: 0.2550825, z: 0.019657075}
+--- !u!114 &360918381
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 360918378}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5190d1aeca0ed4fcd8963f14b52dab2e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &373074150
 GameObject:
   m_ObjectHideFlags: 0

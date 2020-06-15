@@ -8,6 +8,7 @@ public class PUN2_Chat : MonoBehaviourPun
 {
     bool isChatting = false;
     string chatInput = "";
+    GameObject chatRoomCollider = null;
 
     [System.Serializable]
     public class ChatMessage
@@ -33,6 +34,9 @@ public class PUN2_Chat : MonoBehaviourPun
         {
             photonView.ViewID = 1;
         }
+
+        //Let's chace a reference to the chatRoom objects
+        chatRoomCollider = GameObject.Find("chatArea");
     }
 
     // Update is called once per frame
@@ -56,6 +60,14 @@ public class PUN2_Chat : MonoBehaviourPun
 
     void OnGUI()
     {
+
+        var isGuiVisible = chatRoomCollider.GetComponent<ToggleChatGui>().isChatGuiVisible;
+        //Debug.Log("OnGUI " + isGuiVisible.ToString());
+
+        if (!isGuiVisible){
+          return;
+        }
+
         if (!isChatting)
         {
             GUI.Label(new Rect(5, Screen.height - 25, 200, 25), "Press 'T' to chat");
