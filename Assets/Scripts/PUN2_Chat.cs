@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using System;
 using UnityEngine;
 using Photon.Pun;
 using Photon.Realtime;
@@ -80,7 +81,18 @@ public class PUN2_Chat : MonoBehaviourPun
                 if(chatInput.Replace(" ", "") != "")
                 {
                     //Send message
-                    photonView.RPC("SendChat", RpcTarget.All, PhotonNetwork.LocalPlayer, chatInput);
+                    //PhotonNetwork.LocalPlayer.NickName = "diego";
+                    string dateTimeString = DateTime.UtcNow.ToString (System.Globalization.CultureInfo.InvariantCulture);
+		                PlayerPrefs.SetString ("DateTime", dateTimeString);
+
+                    //Display player NickName otherwise just use the player id from PUN
+                    string playerName = (PhotonNetwork.LocalPlayer.NickName == "") ?
+                      PhotonNetwork.AuthValues.UserId : PhotonNetwork.LocalPlayer.NickName;
+
+		                var message = string.Format ("{0} # {1}: {2}", dateTimeString, playerName, chatInput);
+
+                    //var message = PhotonNetwork.LocalPlayer + ": " + chatInput;
+                    photonView.RPC("SendChat", RpcTarget.All, PhotonNetwork.LocalPlayer, message);
                 }
                 chatInput = "";
             }
