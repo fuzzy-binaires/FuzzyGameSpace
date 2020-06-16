@@ -1,5 +1,15 @@
 {
 	"version": "1.0",
+	"playerData":[
+		{
+			"id": 0,
+			"name": "Player 0"
+		},
+		{
+			"id": 1,
+			"name": "Player 1"
+		}
+	],
 	"pinData": [
 		{
 			"id": 0,
