@@ -13,6 +13,8 @@ public class PhotonBoot : MonoBehaviourPunCallbacks
     public static PhotonBoot Instance;
     public static PUN2_Chat chat;
 
+    public PinController pinController;
+
     [SerializeField] Photon.Realtime.TypedLobby lobby = Photon.Realtime.TypedLobby.Default;
     [SerializeField] string roomName = "FuzzyGameSpace";
     [SerializeField] bool isOffline = false;
@@ -86,6 +88,8 @@ public class PhotonBoot : MonoBehaviourPunCallbacks
             return;
         }
 
+        // FUZZY BINAIRES CODE - BEGIN
+
         GameObject player;
 
         if (!isOffline)
@@ -101,7 +105,13 @@ public class PhotonBoot : MonoBehaviourPunCallbacks
 
         player.gameObject.tag = "Player";
 
+        pinController.initializePinState();
+
+        // FUZZY BINAIRES CODE - END
+
+
         connectedToRoom = true;
+
     }
 
     public override void OnPlayerEnteredRoom(Player newPlayer)

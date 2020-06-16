@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using SimpleJSON;
 
 public class PinController : MonoBehaviour
 {
@@ -52,7 +53,9 @@ public class PinController : MonoBehaviour
 
     private void setupPins()
     {
-        foreach(Transform childPin in transform)
+
+
+        foreach (Transform childPin in transform)
         {
             // ADD Pin CLASS TO PIN GOs
             childPin.gameObject.AddComponent<Pin>();
@@ -62,6 +65,39 @@ public class PinController : MonoBehaviour
 
         }
     }
+
+    public void initializePinState()
+    {
+
+        // I do this here because the pinsConnectors is a Photon shared object (everyone can see realtime if somebody post),
+        // But it cannot be initialize before any Player enters a room. Thus I call it from PhotonBoot when PlayerEnters
+        //Debug.Log(Database.getPinData(0));
+
+        for (int i = 0; i < transform.childCount; i++)
+        {
+
+            JSONNode pinData = Database.getPinData(i);
+
+            Pin pin = transform.GetChild(i).gameObject.GetComponent<Pin>();
+
+            if (!pinData["description"].Equals("empty"))
+            {
+                //pin.setIsEmpty(false);
+                StartCoroutine(setPinIsEmptyWithDelay(i / 20.0f, pin, false));
+
+            }
+        }
+    }
+
+    IEnumerator setPinIsEmptyWithDelay(float time, Pin pin, bool state)
+    {
+        yield return new WaitForSeconds(time);
+
+        pin.setIsEmpty(state);
+
+    }
+
+
 
     public void updatePinSelection(int pinId)
     {

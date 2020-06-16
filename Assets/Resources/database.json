@@ -1,0 +1,29 @@
+{
+	"version": "1.0",
+	"pinData": [
+		{
+			"id": 0,
+			"name": "Pin 0",
+			"description": "Description 0",
+			"link": "link 0"
+		},
+		{
+			"id": 1,
+			"name": "Pin 1",
+			"description": "empty",
+			"link": "link 1"
+		},
+		{
+			"id": 2,
+			"name": "Pin 2",
+			"description": "Description 2",
+			"link": "link 2"
+		},
+		{
+			"id": 3,
+			"name": "Pin 3",
+			"description": "empty",
+			"link": "link 3"
+		}
+	]
+}
