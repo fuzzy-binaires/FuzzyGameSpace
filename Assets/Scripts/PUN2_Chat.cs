@@ -51,7 +51,6 @@ public class PUN2_Chat : MonoBehaviourPun
       var timeNow = System.DateTime.Now;
       TMP_ChatInput.ActivateInputField();
 
-
     }
     //--------------------------------------------------------------------------
 
@@ -156,9 +155,9 @@ public class PUN2_Chat : MonoBehaviourPun
         "[<#FFFF80>" + playerName +  "</color>] " +
         message + "\n";
         //
-        m.timer = 15.0f;
+        m.timer = 60.0f;
 
-        chatMessages.Insert(0, m);
+        chatMessages.Add(m);
 
 
         if(chatMessages.Count > 8)
