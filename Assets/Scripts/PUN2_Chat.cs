@@ -50,6 +50,7 @@ public class PUN2_Chat : MonoBehaviourPun
 
       var timeNow = System.DateTime.Now;
       TMP_ChatInput.ActivateInputField();
+      ChatScrollView.verticalNormalizedPosition = 0;
 
     }
     //--------------------------------------------------------------------------
@@ -156,16 +157,16 @@ public class PUN2_Chat : MonoBehaviourPun
         ":" + timeNow.Minute.ToString("d2") +
         ":" + timeNow.Second.ToString("d2") + "</color>] " +
         "[<#FFFF80>" + playerName +  "</color>] " +
-        message + "\n";
+        message;
         //
-        m.timer = 60.0f;
+        m.timer = 50.0f;
 
         chatMessages.Add(m);
 
 
         if(chatMessages.Count > 8)
         {
-            chatMessages.RemoveAt(chatMessages.Count - 1);
+            chatMessages.RemoveAt(0);
         }
     }
     //--------------------------------------------------------------------------
