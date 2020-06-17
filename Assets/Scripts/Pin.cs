@@ -119,7 +119,8 @@ public class Pin : MonoBehaviour
     private void triggerPinConnectorAnimation()
     {
         Vector3 whereItStarts = transform.gameObject.transform.position + new Vector3(0,4f,0);
-        pinConnector = PhotonNetwork.InstantiateSceneObject("Board/PinConnector", whereItStarts, Quaternion.identity, 0);
+        pinConnector = PhotonNetwork.InstantiateSceneObject("Board/PinConnector", whereItStarts, Quaternion.identity);
+        pinConnector.transform.parent = this.transform;
         pinConnectorMoving = true;
 
     }
