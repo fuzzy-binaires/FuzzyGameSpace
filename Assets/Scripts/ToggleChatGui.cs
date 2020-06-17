@@ -10,7 +10,7 @@ public class ToggleChatGui : MonoBehaviour
     void Start()
     {
       ChatCanvasGroup = GameObject.Find("ChatCanvasGroup");
-      //ChatCanvasGroup.SetActive(false);
+
     }
 
     // Update is called once per frame

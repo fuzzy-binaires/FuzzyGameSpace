@@ -102,6 +102,9 @@ public class PUN2_Chat : MonoBehaviourPun
         ChatScrollView = GameObject.Find("Scroll View").GetComponent<ScrollRect>();
         TMP_ChatInput.onSubmit.AddListener(DisplayMeshTextBox);
 
+        //Hide the chat UI initially
+        chatRoomCollider.GetComponent<ToggleChatGui>().ChatCanvasGroup.SetActive(false);
+
 
     }
     //--------------------------------------------------------------------------
