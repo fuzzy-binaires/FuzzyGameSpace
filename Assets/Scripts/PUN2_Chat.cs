@@ -31,7 +31,7 @@ public class PUN2_Chat : MonoBehaviourPun
 
     List<ChatMessage> chatMessages = new List<ChatMessage>();
 
-
+    //--------------------------------------------------------------------------
     void DisplayMeshTextBox(string newText){
 
       // Clear Input Field
@@ -53,9 +53,34 @@ public class PUN2_Chat : MonoBehaviourPun
 
 
     }
+    //--------------------------------------------------------------------------
 
+    string FormatEmoji(string text){
+      string formatedText = text;
 
+        Debug.Log("Here");
 
+      var myDict = new Dictionary<string, string>
+      {
+          { ":D", "<sprite index=0>" },
+          { ":)", "<sprite index=1>" },
+          { ";)", "<sprite index=2>" },
+          { ":|", "<sprite index=3>" },
+          { ":o", "<sprite index=4>" },
+          { ":O", "<sprite index=4>" },
+          { ":(", "<sprite index=5>" },
+      };
+
+      foreach(var item in myDict)
+      {
+        if (formatedText.Contains(item.Key)){
+            formatedText = formatedText.Replace(item.Key, item.Value );
+        }
+      }
+
+      return formatedText;
+    }
+    //--------------------------------------------------------------------------
     void Start()
     {
       Debug.Log("Chat start");
@@ -80,7 +105,7 @@ public class PUN2_Chat : MonoBehaviourPun
 
 
     }
-
+    //--------------------------------------------------------------------------
     // Update is called once per frame
     void Update()
     {
@@ -99,19 +124,19 @@ public class PUN2_Chat : MonoBehaviourPun
             }
         }
     }
-
+    //--------------------------------------------------------------------------
     void OnGUI()
     {
 
         if (Event.current.type == EventType.KeyDown && Event.current.keyCode == KeyCode.Return)
         {
-          var message = string.Format ("{0}", TMP_ChatInput.text);
+          var message = string.Format ("{0}", FormatEmoji(TMP_ChatInput.text));
 
           photonView.RPC("SendChat", RpcTarget.All, PhotonNetwork.LocalPlayer, message);
         }
 
     }
-
+    //--------------------------------------------------------------------------
     [PunRPC]
     void SendChat(Player sender, string message)
     {
@@ -141,4 +166,5 @@ public class PUN2_Chat : MonoBehaviourPun
             chatMessages.RemoveAt(chatMessages.Count - 1);
         }
     }
+    //--------------------------------------------------------------------------
 }
