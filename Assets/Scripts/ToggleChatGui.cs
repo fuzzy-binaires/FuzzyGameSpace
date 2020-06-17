@@ -5,10 +5,12 @@ using UnityEngine;
 public class ToggleChatGui : MonoBehaviour
 {
    public bool isChatGuiVisible = false;
+   public GameObject ChatCanvasGroup;
     // Start is called before the first frame update
     void Start()
     {
-
+      ChatCanvasGroup = GameObject.Find("ChatCanvasGroup");
+      //ChatCanvasGroup.SetActive(false);
     }
 
     // Update is called once per frame
@@ -22,6 +24,7 @@ public class ToggleChatGui : MonoBehaviour
        if(other.CompareTag("Player"))
        {
           isChatGuiVisible = true;
+          ChatCanvasGroup.SetActive(true);
        }
 
     }
@@ -31,6 +34,7 @@ public class ToggleChatGui : MonoBehaviour
        if(other.CompareTag("Player"))
        {
           isChatGuiVisible = false;
+          ChatCanvasGroup.SetActive(false);
        }
 
     }

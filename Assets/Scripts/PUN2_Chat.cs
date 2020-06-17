@@ -4,9 +4,19 @@ using System;
 using UnityEngine;
 using Photon.Pun;
 using Photon.Realtime;
+using TMPro;
+using UnityEngine.UI;
+
 
 public class PUN2_Chat : MonoBehaviourPun
 {
+
+    public TMP_InputField TMP_ChatInput;
+
+    public TMP_Text TMP_ChatOutput;
+
+    public ScrollRect ChatScrollView;
+
     bool isChatting = false;
     string chatInput = "";
     GameObject chatRoomCollider = null;
@@ -21,7 +31,31 @@ public class PUN2_Chat : MonoBehaviourPun
 
     List<ChatMessage> chatMessages = new List<ChatMessage>();
 
-    // Start is called before the first frame update
+
+    void DisplayMeshTextBox(string newText){
+
+      // Clear Input Field
+      TMP_ChatInput.text = string.Empty;
+      TMP_ChatOutput.text = string.Empty;
+
+      //Show messages
+      for(int i = 0; i < chatMessages.Count; i++)
+      {
+          if(chatMessages[i].timer > 0 )
+          {
+            TMP_ChatOutput.text +=  chatMessages[i].message + "\n";
+
+          }
+      }
+
+      var timeNow = System.DateTime.Now;
+      TMP_ChatInput.ActivateInputField();
+
+
+    }
+
+
+
     void Start()
     {
       Debug.Log("Chat start");
@@ -38,6 +72,13 @@ public class PUN2_Chat : MonoBehaviourPun
 
         //Let's chace a reference to the chatRoom objects
         chatRoomCollider = GameObject.Find("chatArea");
+
+        TMP_ChatInput  = GameObject.Find("chatInput").GetComponent<TMP_InputField>();
+        TMP_ChatOutput = GameObject.Find("chatOutput").GetComponent<TMP_Text>();
+        ChatScrollView = GameObject.Find("Scroll View").GetComponent<ScrollRect>();
+        TMP_ChatInput.onSubmit.AddListener(DisplayMeshTextBox);
+
+
     }
 
     // Update is called once per frame
@@ -62,58 +103,13 @@ public class PUN2_Chat : MonoBehaviourPun
     void OnGUI()
     {
 
-        var isGuiVisible = chatRoomCollider.GetComponent<ToggleChatGui>().isChatGuiVisible;
-        //Debug.Log("OnGUI " + isGuiVisible.ToString());
-
-        if (!isGuiVisible){
-          return;
-        }
-
-        if (!isChatting)
+        if (Event.current.type == EventType.KeyDown && Event.current.keyCode == KeyCode.Return)
         {
-            GUI.Label(new Rect(5, Screen.height - 25, 200, 25), "Press 'T' to chat");
-        }
-        else
-        {
-            if (Event.current.type == EventType.KeyDown && Event.current.keyCode == KeyCode.Return)
-            {
-                isChatting = false;
-                if(chatInput.Replace(" ", "") != "")
-                {
-                    //Send message
-                    //PhotonNetwork.LocalPlayer.NickName = "diego";
-                    string dateTimeString = DateTime.UtcNow.ToString (System.Globalization.CultureInfo.InvariantCulture);
-		                PlayerPrefs.SetString ("DateTime", dateTimeString);
+          var message = string.Format ("{0}", TMP_ChatInput.text);
 
-                    //Display player NickName otherwise just use the player id from PUN
-                    string playerName = (PhotonNetwork.LocalPlayer.NickName == "") ?
-                      PhotonNetwork.AuthValues.UserId : PhotonNetwork.LocalPlayer.NickName;
-
-		                var message = string.Format ("{0} # {1}: {2}", dateTimeString, playerName, chatInput);
-
-                    //var message = PhotonNetwork.LocalPlayer + ": " + chatInput;
-                    photonView.RPC("SendChat", RpcTarget.All, PhotonNetwork.LocalPlayer, message);
-                }
-                chatInput = "";
-            }
-
-            GUI.SetNextControlName("ChatField");
-            GUI.Label(new Rect(5, Screen.height - 25, 200, 25), "Say:");
-            GUIStyle inputStyle = GUI.skin.GetStyle("box");
-            inputStyle.alignment = TextAnchor.MiddleLeft;
-            chatInput = GUI.TextField(new Rect(10 + 25, Screen.height - 27, 400, 22), chatInput, 60, inputStyle);
-
-            GUI.FocusControl("ChatField");
+          photonView.RPC("SendChat", RpcTarget.All, PhotonNetwork.LocalPlayer, message);
         }
 
-        //Show messages
-        for(int i = 0; i < chatMessages.Count; i++)
-        {
-            if(chatMessages[i].timer > 0 || isChatting)
-            {
-                GUI.Label(new Rect(5, Screen.height - 50 - 25 * i, 500, 25), chatMessages[i].sender + ": " + chatMessages[i].message);
-            }
-        }
     }
 
     [PunRPC]
@@ -121,10 +117,25 @@ public class PUN2_Chat : MonoBehaviourPun
     {
         ChatMessage m = new ChatMessage();
         m.sender = sender.NickName;
-        m.message = message;
+        var timeNow = System.DateTime.Now;
+
+        Debug.Log(m.message);
+
+        //Display player NickName otherwise just use the player id from PUN
+        string playerName = (PhotonNetwork.LocalPlayer.NickName == "") ?
+          PhotonNetwork.AuthValues.UserId : PhotonNetwork.LocalPlayer.NickName;
+
+        m.message = "[<#FFFF80>" + timeNow.Hour.ToString("d2") +
+        ":" + timeNow.Minute.ToString("d2") +
+        ":" + timeNow.Second.ToString("d2") + "</color>] " +
+        "[<#FFFF80>" + playerName +  "</color>] " +
+        message + "\n";
+        //
         m.timer = 15.0f;
 
         chatMessages.Insert(0, m);
+
+
         if(chatMessages.Count > 8)
         {
             chatMessages.RemoveAt(chatMessages.Count - 1);
