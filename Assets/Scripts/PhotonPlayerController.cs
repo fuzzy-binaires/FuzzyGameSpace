@@ -6,6 +6,7 @@ using Photon.Pun;
 public class PhotonPlayerController : MonoBehaviour
 {
     private PhotonView photonView;
+    private float lastPressedTime = 0.0f;
     public static PhotonPlayerController localPlayer;
 
     void Start()
@@ -16,7 +17,7 @@ public class PhotonPlayerController : MonoBehaviour
             // this is the local player, can't be overwritten.
             localPlayer = this;
         }
-        
+
 
     }
 
@@ -53,7 +54,18 @@ public class PhotonPlayerController : MonoBehaviour
             pos += new Vector3(0f, 0f, -Time.deltaTime);
             transform.position = pos;
         }
-        
+
+        if (Input.GetKey(KeyCode.U)) {
+
+          if (lastPressedTime + 0.2 < Time.time) {
+              lastPressedTime = Time.time;
+              transform.RotateAround(transform.position, transform.right, 90f);
+
+          }
+
+
+        }
+
     }
 
 }
