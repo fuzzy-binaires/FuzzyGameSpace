@@ -30,25 +30,25 @@ public class PhotonPlayerController : MonoBehaviour
         }
 
         // moving the player according to Keyboard Input
-        if (Input.GetKey(KeyCode.W)) {
+        if (Input.GetKey(KeyCode.S)) {
             Vector3 pos = this.transform.position;
             pos += new Vector3(Time.deltaTime, 0f, 0f);
             transform.position = pos;
         }
 
-        else if (Input.GetKey(KeyCode.A)) {
+        else if (Input.GetKey(KeyCode.D)) {
             Vector3 pos = this.transform.position;
             pos += new Vector3(0f, 0f, Time.deltaTime);
             transform.position = pos;
         }
 
-        else if (Input.GetKey(KeyCode.S)) {
+        else if (Input.GetKey(KeyCode.W)) {
             Vector3 pos = this.transform.position;
             pos += new Vector3(-Time.deltaTime, 0f, 0f);
             transform.position = pos;
         }
 
-         else if (Input.GetKey(KeyCode.D)) {
+         else if (Input.GetKey(KeyCode.A)) {
             Vector3 pos = this.transform.position;
             pos += new Vector3(0f, 0f, -Time.deltaTime);
             transform.position = pos;
