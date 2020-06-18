@@ -153,10 +153,10 @@ public class PUN2_Chat : MonoBehaviourPun
         string playerName = (PhotonNetwork.LocalPlayer.NickName == "") ?
           PhotonNetwork.AuthValues.UserId : PhotonNetwork.LocalPlayer.NickName;
 
-        m.message = "[<#FFFF80>" + timeNow.Hour.ToString("d2") +
+        m.message = "<size=60%> <#FFFF80>" + timeNow.Hour.ToString("d2") +
         ":" + timeNow.Minute.ToString("d2") +
-        ":" + timeNow.Second.ToString("d2") + "</color>] " +
-        "[<#FFFF80>" + playerName +  "</color>] " +
+        ":" + timeNow.Second.ToString("d2") + "</color> " +
+        " <#FFFF80>" + playerName +  "</color> " +
         message;
         //
         m.timer = 50.0f;
