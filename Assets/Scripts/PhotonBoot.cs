@@ -105,7 +105,8 @@ public class PhotonBoot : MonoBehaviourPunCallbacks
 
         player.gameObject.tag = "Player";
 
-        pinController.initializePinState();
+
+        pinController?.initializePinState();
 
         // FUZZY BINAIRES CODE - END
 
