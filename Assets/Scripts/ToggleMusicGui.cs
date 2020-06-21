@@ -5,10 +5,11 @@ using UnityEngine;
 public class ToggleMusicGui : MonoBehaviour
 {
     public bool isMusicGuiVisible = false;
+    public GameObject MusicPlayerCanvasGroup;
     // Start is called before the first frame update
     void Start()
     {
-
+      MusicPlayerCanvasGroup = GameObject.Find("MusicPlayerCanvasGroup");
     }
 
     // Update is called once per frame
@@ -22,7 +23,7 @@ public class ToggleMusicGui : MonoBehaviour
        if(other.CompareTag("Player"))
        {
           isMusicGuiVisible = true;
-          //ChatCanvasGroup.SetActive(true);
+          MusicPlayerCanvasGroup.SetActive(true);
        }
 
     }
@@ -32,7 +33,7 @@ public class ToggleMusicGui : MonoBehaviour
        if(other.CompareTag("Player"))
        {
           isMusicGuiVisible = false;
-          //ChatCanvasGroup.SetActive(false);
+          MusicPlayerCanvasGroup.SetActive(false);
        }
 
     }

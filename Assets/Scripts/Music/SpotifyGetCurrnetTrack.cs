@@ -27,17 +27,13 @@ public class SpotifyGetCurrnetTrack : MonoBehaviour
   private string spotifyApplicationClientId = "88364b4054954b34bd98c83917307144";
   private string AuthorizationToken = "BQANrfQcx9_6WE00lLnQbmSMXysVJUf8szVQJT1Oi_gxoshyuMh3oCe3J8n9Nqd3yPzreNo7JDDbZSXa4A_UatpdCgH-scAy2srXQuwDnZQRtIlYlh31ZZhcTD_bgGgCPNqYwdf7jCOr09DKVCyfNA";//"AQCv-vm2g1nHSojvTsVIWVQ5nDlFbVMlyUNNiHhu1wU9HS0t25cAmTkXBfXCtoROov7fQi0nUAPpGrXQbZZ4LqML720JZK1mKD3_3CxgT9RDpcLBxQITsHqK6kjoFz0fFVJKfzopcpoSdtWMoRinh8l1dz4jQ8KAmKKc3nnSSwP29QkH19AD5bQNNdX5HQuMI5aN-6jfCs_CRw";
 
-/*
-curl -X "GET" "https://api.spotify.com/v1/me/player/currently-playing" -H "Accept: application/json" -H "Content-Type: application/json" -H "Authorization: Bearer BQD1j4UM-0BBkX-df7AOpT7Dt_w9csDEvZebz1nXchGICUb0Et3_RiBNOAS2LggGoqo7sEj_bPdczj4URRNWNp5YerfMX9WAxXhHoe8WVyKitgMnskg7aLz7l52uY7LfNoRhGhEIyYRw7LJGfkAarA"
-*/
     void Start()
     {
-        //My need This
-        //curl -X "GET" "https://api.spotify.com/v1/me/player/currently-playing" -H "Accept: application/json" -H "Content-Type: application/json" -H "Authorization: Bearer BQD1j4UM-0BBkX-df7AOpT7Dt_w9csDEvZebz1nXchGICUb0Et3_RiBNOAS2LggGoqo7sEj_bPdczj4URRNWNp5YerfMX9WAxXhHoe8WVyKitgMnskg7aLz7l52uY7LfNoRhGhEIyYRw7LJGfkAarA"
-
         playlistCollider = GameObject.Find("playlist_trigger");
         spotifyTokenInput  = GameObject.Find("InputSpotifyToken").GetComponent<TMP_InputField>();
         albumArt = GameObject.Find("albumArt").GetComponent<RawImage>();
+
+        playlistCollider.GetComponent<ToggleMusicGui>().MusicPlayerCanvasGroup.SetActive(false);
 
     }
 
