@@ -20,19 +20,18 @@ using UnityEngine.UI;
 public class SpotifyGetCurrnetTrack : MonoBehaviour
 {
   private GameObject playlistCollider;
-  public TMP_Text outTxt;
+  public TMP_Text songURLText;
   private RawImage albumArt;
   public TMP_InputField spotifyTokenInput;
   public bool haveAuthorizationToken = true;
   private string spotifyApplicationClientId = "88364b4054954b34bd98c83917307144";
-  private string AuthorizationToken = "BQANrfQcx9_6WE00lLnQbmSMXysVJUf8szVQJT1Oi_gxoshyuMh3oCe3J8n9Nqd3yPzreNo7JDDbZSXa4A_UatpdCgH-scAy2srXQuwDnZQRtIlYlh31ZZhcTD_bgGgCPNqYwdf7jCOr09DKVCyfNA";//"AQCv-vm2g1nHSojvTsVIWVQ5nDlFbVMlyUNNiHhu1wU9HS0t25cAmTkXBfXCtoROov7fQi0nUAPpGrXQbZZ4LqML720JZK1mKD3_3CxgT9RDpcLBxQITsHqK6kjoFz0fFVJKfzopcpoSdtWMoRinh8l1dz4jQ8KAmKKc3nnSSwP29QkH19AD5bQNNdX5HQuMI5aN-6jfCs_CRw";
 
     void Start()
     {
         playlistCollider = GameObject.Find("playlist_trigger");
         spotifyTokenInput  = GameObject.Find("InputSpotifyToken").GetComponent<TMP_InputField>();
         albumArt = GameObject.Find("albumArt").GetComponent<RawImage>();
-
+        songURLText = GameObject.Find("songURLText").GetComponent<TMP_Text>();
         playlistCollider.GetComponent<ToggleMusicGui>().MusicPlayerCanvasGroup.SetActive(false);
 
     }
@@ -119,7 +118,13 @@ public class SpotifyGetCurrnetTrack : MonoBehaviour
           Debug.Log(">>>> " + jsonData["is_playing"]);
 
           string albumArtUrl = jsonData["item"]["album"]["images"][0]["url"];
+          string spotifyLink = jsonData["item"]["album"]["artists"][0]["external_urls"]["spotify"];
           Debug.Log(">>>> " + albumArt);
+          Debug.Log("???? " + spotifyLink);
+
+
+          songURLText.text = string.Format ("<link = \"{0}\"> Open Song...  </link>", spotifyLink);
+
           StartCoroutine(DownloadAlbumImage(albumArtUrl));
 
         } else {
