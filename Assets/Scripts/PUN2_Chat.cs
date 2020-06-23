@@ -13,9 +13,21 @@ public class PUN2_Chat : MonoBehaviourPun
 
     public TMP_InputField TMP_ChatInput;
 
+    public TMP_InputField  InputFieldUrlLink;
+
     public TMP_Text TMP_ChatOutput;
 
     public ScrollRect ChatScrollView;
+
+    public TMP_Dropdown MusicDropDown;
+
+    public Button PlaylistURLGoButton;
+
+    private GameObject playlistCollider;
+
+    private GameObject MusicPlayerCanvasGroup;
+
+
 
     bool isChatting = false;
     string chatInput = "";
@@ -58,7 +70,7 @@ public class PUN2_Chat : MonoBehaviourPun
     string FormatEmoji(string text){
       string formatedText = text;
 
-        Debug.Log("Here");
+        Debug.Log("FormatEmoji");
 
       var myDict = new Dictionary<string, string>
       {
@@ -95,18 +107,39 @@ public class PUN2_Chat : MonoBehaviourPun
             photonView.ViewID = 1;
         }
 
+        Debug.Log("1");
         //Let's chace a reference to the chatRoom objects
         chatRoomCollider = GameObject.Find("chatArea");
+        PlaylistURLGoButton = GameObject.Find("MusicGoUrl").GetComponent<Button>();
+        PlaylistURLGoButton.onClick.AddListener(OpenSharedLinkFromMusicDropDown);
 
+        Debug.Log("2");
         TMP_ChatInput  = GameObject.Find("chatInput").GetComponent<TMP_InputField>();
+
         TMP_ChatOutput = GameObject.Find("chatOutput").GetComponent<TMP_Text>();
         ChatScrollView = GameObject.Find("Scroll View").GetComponent<ScrollRect>();
+        InputFieldUrlLink = GameObject.Find("InputFieldUrlLink").GetComponent<TMP_InputField>();
         TMP_ChatInput.onSubmit.AddListener(DisplayMeshTextBox);
+        MusicDropDown = GameObject.Find("MusicDropdown").GetComponent<TMP_Dropdown>();
 
+        Debug.Log("3");
         //Hide the chat UI initially
+        playlistCollider = GameObject.Find("playlist_trigger");
         chatRoomCollider.GetComponent<ToggleChatGui>().ChatCanvasGroup.SetActive(false);
+        playlistCollider.GetComponent<ToggleMusicGui>().MusicPlayerCanvasGroup.SetActive(false);
 
+    }
+    //--------------------------------------------------------------------------
+    void OpenSharedLinkFromMusicDropDown(){
+      Debug.Log("OpenSharedLinkFromMusicDropDown: XXXX");
+      if (MusicDropDown == null){
+        return;
+      }
 
+      string URL = MusicDropDown.options[MusicDropDown.value].text;
+      Debug.Log("OpenSharedLinkFromMusicDropDown: " + URL);
+      //Make sure string starts with http or it won't work!
+      Application.OpenURL(URL);
     }
     //--------------------------------------------------------------------------
     // Update is called once per frame
@@ -128,7 +161,7 @@ public class PUN2_Chat : MonoBehaviourPun
         }
     }
     //--------------------------------------------------------------------------
-    void OnGUI()
+  void OnGUI()
     {
 
         if (Event.current.type == EventType.KeyDown && Event.current.keyCode == KeyCode.Return)
@@ -136,7 +169,23 @@ public class PUN2_Chat : MonoBehaviourPun
           var message = string.Format ("{0}", FormatEmoji(TMP_ChatInput.text));
 
           photonView.RPC("SendChat", RpcTarget.All, PhotonNetwork.LocalPlayer, message);
+
+          if (playlistCollider.GetComponent<ToggleMusicGui>().MusicPlayerCanvasGroup.activeSelf){
+              photonView.RPC("PostLink", RpcTarget.All, PhotonNetwork.LocalPlayer, InputFieldUrlLink.text);
+              InputFieldUrlLink.text = "";
+          }
+
         }
+
+    }
+    //--------------------------------------------------------------------------
+    [PunRPC]
+    void PostLink(Player sender, string message)
+    {
+      Debug.Log("PostLink");
+      if (MusicDropDown != null){
+          MusicDropDown.options.Add (new TMP_Dropdown.OptionData() {text=message});
+      }
 
     }
     //--------------------------------------------------------------------------

@@ -11,7 +11,8 @@ using UnityEngine.SceneManagement;
 public class PhotonBoot : MonoBehaviourPunCallbacks
 {
     public static PhotonBoot Instance;
-    public static PUN2_Chat chat;
+    public static PUN2_Chat chatManager;
+    public static UrlSharingManager urlShareManager;
 
     public PinController pinController;
 
@@ -29,7 +30,7 @@ public class PhotonBoot : MonoBehaviourPunCallbacks
 
         Connect();
 
-        
+
     }
 
     public void Connect()

@@ -32,7 +32,7 @@ public class SpotifyGetCurrnetTrack : MonoBehaviour
         spotifyTokenInput  = GameObject.Find("InputSpotifyToken").GetComponent<TMP_InputField>();
         albumArt = GameObject.Find("albumArt").GetComponent<RawImage>();
         songURLText = GameObject.Find("songURLText").GetComponent<TMP_Text>();
-        playlistCollider.GetComponent<ToggleMusicGui>().MusicPlayerCanvasGroup.SetActive(false);
+        //playlistCollider.GetComponent<ToggleMusicGui>().MusicPlayerCanvasGroup.SetActive(false);
 
     }
 
