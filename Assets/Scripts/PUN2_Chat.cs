@@ -6,10 +6,14 @@ using Photon.Pun;
 using Photon.Realtime;
 using TMPro;
 using UnityEngine.UI;
-
+using System.Runtime.InteropServices;
 
 public class PUN2_Chat : MonoBehaviourPun
 {
+
+   [DllImport("__Internal")]
+    private static extern void OpenBrowserTabJS(string url);
+
 
     public TMP_InputField TMP_ChatInput;
 
@@ -96,6 +100,8 @@ public class PUN2_Chat : MonoBehaviourPun
     void Start()
     {
       Debug.Log("Chat start");
+
+      
         //Initialize Photon View
         if(gameObject.GetComponent<PhotonView>() == null)
         {
@@ -107,13 +113,11 @@ public class PUN2_Chat : MonoBehaviourPun
             photonView.ViewID = 1;
         }
 
-        Debug.Log("1");
         //Let's chace a reference to the chatRoom objects
         chatRoomCollider = GameObject.Find("chatArea");
         PlaylistURLGoButton = GameObject.Find("MusicGoUrl").GetComponent<Button>();
         PlaylistURLGoButton.onClick.AddListener(OpenSharedLinkFromMusicDropDown);
 
-        Debug.Log("2");
         TMP_ChatInput  = GameObject.Find("chatInput").GetComponent<TMP_InputField>();
 
         TMP_ChatOutput = GameObject.Find("chatOutput").GetComponent<TMP_Text>();
@@ -122,7 +126,6 @@ public class PUN2_Chat : MonoBehaviourPun
         TMP_ChatInput.onSubmit.AddListener(DisplayMeshTextBox);
         MusicDropDown = GameObject.Find("MusicDropdown").GetComponent<TMP_Dropdown>();
 
-        Debug.Log("3");
         //Hide the chat UI initially
         playlistCollider = GameObject.Find("playlist_trigger");
         chatRoomCollider.GetComponent<ToggleChatGui>().ChatCanvasGroup.SetActive(false);
@@ -137,9 +140,10 @@ public class PUN2_Chat : MonoBehaviourPun
       }
 
       string URL = MusicDropDown.options[MusicDropDown.value].text;
-      Debug.Log("OpenSharedLinkFromMusicDropDown: " + URL);
-      //Make sure string starts with http or it won't work!
-      Application.OpenURL(URL);
+      Debug.LogError("OpenSharedLinkFromMusicDropDown: " + URL);
+      // https://docs.unity3d.com/Manual/webgl-interactingwithbrowserscripting.html
+
+      OpenBrowserTabJS(URL);
     }
     //--------------------------------------------------------------------------
     // Update is called once per frame
@@ -184,7 +188,10 @@ public class PUN2_Chat : MonoBehaviourPun
     {
       Debug.Log("PostLink");
       if (MusicDropDown != null){
-          MusicDropDown.options.Add (new TMP_Dropdown.OptionData() {text=message});
+          if (message.StartsWith("http://") || message.StartsWith("https://")){
+              MusicDropDown.options.Add (new TMP_Dropdown.OptionData() {text=message});
+          }
+
       }
 
     }
