@@ -32,8 +32,6 @@ public class PUN2_Chat : MonoBehaviourPun
     private GameObject MusicPlayerCanvasGroup;
 
 
-
-    bool isChatting = false;
     string chatInput = "";
     GameObject chatRoomCollider = null;
 
@@ -101,7 +99,7 @@ public class PUN2_Chat : MonoBehaviourPun
     {
       Debug.Log("Chat start");
 
-      
+
         //Initialize Photon View
         if(gameObject.GetComponent<PhotonView>() == null)
         {
@@ -134,7 +132,7 @@ public class PUN2_Chat : MonoBehaviourPun
     }
     //--------------------------------------------------------------------------
     void OpenSharedLinkFromMusicDropDown(){
-      Debug.Log("OpenSharedLinkFromMusicDropDown: XXXX");
+
       if (MusicDropDown == null){
         return;
       }
@@ -149,11 +147,6 @@ public class PUN2_Chat : MonoBehaviourPun
     // Update is called once per frame
     void Update()
     {
-        if (Input.GetKeyUp(KeyCode.T) && !isChatting)
-        {
-            isChatting = true;
-            chatInput = "";
-        }
 
         //Hide messages after timer is expired
         for (int i = 0; i < chatMessages.Count; i++)
