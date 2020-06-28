@@ -46,10 +46,10 @@ public class PUN2_Chat : MonoBehaviourPun
     List<ChatMessage> chatMessages = new List<ChatMessage>();
 
     //--------------------------------------------------------------------------
-    void DisplayMeshTextBox(string newText){
+    void DisplayMeshTextBox(){
 
       // Clear Input Field
-      TMP_ChatInput.text = string.Empty;
+      //TMP_ChatInput.text = string.Empty;
       TMP_ChatOutput.text = string.Empty;
 
       //Show messages
@@ -121,7 +121,7 @@ public class PUN2_Chat : MonoBehaviourPun
         TMP_ChatOutput = GameObject.Find("chatOutput").GetComponent<TMP_Text>();
         ChatScrollView = GameObject.Find("Scroll View").GetComponent<ScrollRect>();
         InputFieldUrlLink = GameObject.Find("InputFieldUrlLink").GetComponent<TMP_InputField>();
-        TMP_ChatInput.onSubmit.AddListener(DisplayMeshTextBox);
+        //TMP_ChatInput.onSubmit.AddListener(DisplayMeshTextBox);
         MusicDropDown = GameObject.Find("MusicDropdown").GetComponent<TMP_Dropdown>();
 
         //Hide the chat UI initially
@@ -173,6 +173,8 @@ public class PUN2_Chat : MonoBehaviourPun
           }
 
         }
+
+        DisplayMeshTextBox();
 
     }
     //--------------------------------------------------------------------------
