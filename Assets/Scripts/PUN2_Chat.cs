@@ -181,7 +181,7 @@ public class PUN2_Chat : MonoBehaviourPun
     [PunRPC]
     void PostLink(Player sender, string message)
     {
-      Debug.Log("PostLink");
+      Debug.LogError("PostLink");
       if (MusicDropDown != null){
           if (message.StartsWith("http://") || message.StartsWith("https://")){
               MusicDropDown.options.Add (new TMP_Dropdown.OptionData() {text=message});
