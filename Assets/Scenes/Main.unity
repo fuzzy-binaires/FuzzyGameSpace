@@ -1263,7 +1263,7 @@ MonoBehaviour:
   m_HandleRect: {fileID: 637486940}
   m_Direction: 2
   m_Value: 0
-  m_Size: 1
+  m_Size: 0.9148946
   m_NumberOfSteps: 0
   m_OnValueChanged:
     m_PersistentCalls:
@@ -1492,7 +1492,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 1}
   m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: 0, y: 0.00026121532}
+  m_AnchoredPosition: {x: 0, y: 4.084054}
   m_SizeDelta: {x: 0, y: 300}
   m_Pivot: {x: 0, y: 1}
 --- !u!1 &291404926
@@ -4531,7 +4531,7 @@ MonoBehaviour:
   cameraGroundPos: {fileID: 0}
   boardCenterPosition: {fileID: 0}
   rotYAngle: 40
-  rotXAngle: 180
+  rotXAngle: 225
   rotSpeed: 0.1
   camOffset: {x: 0, y: 0, z: -8}
   orthographic: 1

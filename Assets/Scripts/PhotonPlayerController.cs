@@ -13,55 +13,65 @@ public class PhotonPlayerController : MonoBehaviour
     {
         photonView = GetComponent<PhotonView>();
 
-        if (photonView.IsMine) {
+        if (photonView.IsMine)
+        {
             // this is the local player, can't be overwritten.
             localPlayer = this;
         }
-
-
     }
 
-    // Update is called once per frame
     void Update()
     {
 
-        if (!photonView.IsMine) {
+        if (!photonView.IsMine)
+        {
             // this is not my player to move!
             return;
         }
 
+        Vector2 moveInput = Vector2.zero;
+
         // moving the player according to Keyboard Input
-        if (Input.GetKey(KeyCode.S) || Input.GetKey(KeyCode.DownArrow)) {
-            Vector3 pos = this.transform.position;
-            pos += new Vector3(Time.deltaTime, 0f, 0f);
-            transform.position = pos;
+        if (Input.GetKey(KeyCode.S) || Input.GetKey(KeyCode.DownArrow))
+        {
+            moveInput += new Vector2(-1f, 0f);
         }
 
-        if (Input.GetKey(KeyCode.D) || Input.GetKey(KeyCode.RightArrow)) {
-            Vector3 pos = this.transform.position;
-            pos += new Vector3(0f, 0f, Time.deltaTime);
-            transform.position = pos;
+        if (Input.GetKey(KeyCode.D) || Input.GetKey(KeyCode.RightArrow))
+        {
+            moveInput += new Vector2(0f, 1f);
         }
 
-        if (Input.GetKey(KeyCode.W) || Input.GetKey(KeyCode.UpArrow)) {
-            Vector3 pos = this.transform.position;
-            pos += new Vector3(-Time.deltaTime, 0f, 0f);
-            transform.position = pos;
+        if (Input.GetKey(KeyCode.W) || Input.GetKey(KeyCode.UpArrow))
+        {
+            moveInput += new Vector2(1f, 0f);
         }
 
-        if (Input.GetKey(KeyCode.A) || Input.GetKey(KeyCode.LeftArrow)) {
-            Vector3 pos = this.transform.position;
-            pos += new Vector3(0f, 0f, -Time.deltaTime);
-            transform.position = pos;
+        if (Input.GetKey(KeyCode.A) || Input.GetKey(KeyCode.LeftArrow))
+        {
+            moveInput += new Vector2(0f, -1f);
         }
 
-        if (Input.GetKey(KeyCode.U)) {
+        if (moveInput.magnitude > 0f) {
+        Vector3 direction = Camera.main.transform.TransformDirection(new Vector3(moveInput.y, 0f, moveInput.x));
+        direction = Vector3.ProjectOnPlane(direction, Vector3.up);
 
-          if (lastPressedTime + 0.2 < Time.time) {
-              lastPressedTime = Time.time;
-              transform.RotateAround(transform.position, transform.right, 90f);
+        Vector3 pos = this.transform.position;
+        pos += direction.RemoveDiagonal().normalized * Time.deltaTime; // map the inputs onto the grid 
+        transform.position = pos;
+        }
+     
 
-          }
+        if (Input.GetKey(KeyCode.U))
+        {
+            // if uuuuu fall "U" will catch uuuuu
+
+            if (lastPressedTime + 0.2 < Time.time)
+            {
+                lastPressedTime = Time.time;
+                transform.RotateAround(transform.position, transform.right, 90f);
+
+            }
 
 
         }

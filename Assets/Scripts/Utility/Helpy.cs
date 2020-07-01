@@ -10,6 +10,17 @@ public static class Helpy
     // ---------- VECTOR ----------
     // ----------------------------
 
+    /// maps any vector onto defined axis.
+    public static Vector3 RemoveDiagonal (this Vector3 inputVector){
+     float X = inputVector.x;
+     float Y = inputVector.z;
+     if (X*X > Y*Y){
+         return new Vector3 (X,0f,0f);
+     } else {
+         return new Vector3 (0f,0f,Y);
+     }
+}
+
     /// converts a Vector3 to a Vector2, ignoring the Vector3.z
     public static Vector2 ToV2(Vector3 v3)
     {

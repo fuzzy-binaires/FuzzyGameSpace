@@ -46,6 +46,8 @@ public class CameraZoom : MonoBehaviour
         camPos = this.transform.position; // read out camera position
         Camera.main.orthographic = this.orthographic;
         cameraRotOffset = rotXAngle;
+        lastMousePos = Input.mousePosition;
+        updateCameraRotation(false);
     }
 
 
@@ -53,7 +55,9 @@ public class CameraZoom : MonoBehaviour
     {
 
         updateCameraZoom();
+        
         updateCameraRotation();
+        
     }
 
     private void updateCameraZoom(){
@@ -66,14 +70,16 @@ public class CameraZoom : MonoBehaviour
         Camera.main.orthographicSize = Mathf.Lerp(Camera.main.orthographicSize, zoomSize, Time.deltaTime * zoomSmoothing);
     }
 
-    private void updateCameraRotation()
+    private void updateCameraRotation(bool checkMouseButton = true)
     {
         Vector3 playerPos = getPlayerPos();
 
         Vector3 mouseDelta = Input.mousePosition - lastMousePos;
         lastMousePos = Input.mousePosition;
 
-        cameraRotOffset += mouseDelta.x * rotSpeed;
+        if (!checkMouseButton || Input.GetMouseButton(0)) {
+            cameraRotOffset += mouseDelta.x * rotSpeed;
+        }   
 
         Quaternion rotation = Quaternion.Euler(rotYAngle, cameraRotOffset, 0f);
         Camera.main.transform.rotation = rotation;
