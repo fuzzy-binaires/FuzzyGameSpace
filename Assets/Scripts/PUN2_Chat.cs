@@ -6,18 +6,32 @@ using Photon.Pun;
 using Photon.Realtime;
 using TMPro;
 using UnityEngine.UI;
-
+using System.Runtime.InteropServices;
 
 public class PUN2_Chat : MonoBehaviourPun
 {
 
+   [DllImport("__Internal")]
+    private static extern void OpenBrowserTabJS(string url);
+
+
     public TMP_InputField TMP_ChatInput;
+
+    public TMP_InputField  InputFieldUrlLink;
 
     public TMP_Text TMP_ChatOutput;
 
     public ScrollRect ChatScrollView;
 
-    bool isChatting = false;
+    public TMP_Dropdown MusicDropDown;
+
+    public Button PlaylistURLGoButton;
+
+    private GameObject playlistCollider;
+
+    private GameObject MusicPlayerCanvasGroup;
+
+
     string chatInput = "";
     GameObject chatRoomCollider = null;
 
@@ -32,10 +46,10 @@ public class PUN2_Chat : MonoBehaviourPun
     List<ChatMessage> chatMessages = new List<ChatMessage>();
 
     //--------------------------------------------------------------------------
-    void DisplayMeshTextBox(string newText){
+    void DisplayMeshTextBox(){
 
       // Clear Input Field
-      TMP_ChatInput.text = string.Empty;
+      //TMP_ChatInput.text = string.Empty;
       TMP_ChatOutput.text = string.Empty;
 
       //Show messages
@@ -58,7 +72,7 @@ public class PUN2_Chat : MonoBehaviourPun
     string FormatEmoji(string text){
       string formatedText = text;
 
-        Debug.Log("Here");
+        Debug.Log("FormatEmoji");
 
       var myDict = new Dictionary<string, string>
       {
@@ -84,6 +98,8 @@ public class PUN2_Chat : MonoBehaviourPun
     void Start()
     {
       Debug.Log("Chat start");
+
+
         //Initialize Photon View
         if(gameObject.GetComponent<PhotonView>() == null)
         {
@@ -97,26 +113,40 @@ public class PUN2_Chat : MonoBehaviourPun
 
         //Let's chace a reference to the chatRoom objects
         chatRoomCollider = GameObject.Find("chatArea");
+        PlaylistURLGoButton = GameObject.Find("MusicGoUrl").GetComponent<Button>();
+        PlaylistURLGoButton.onClick.AddListener(OpenSharedLinkFromMusicDropDown);
 
         TMP_ChatInput  = GameObject.Find("chatInput").GetComponent<TMP_InputField>();
+
         TMP_ChatOutput = GameObject.Find("chatOutput").GetComponent<TMP_Text>();
         ChatScrollView = GameObject.Find("Scroll View").GetComponent<ScrollRect>();
-        TMP_ChatInput.onSubmit.AddListener(DisplayMeshTextBox);
+        InputFieldUrlLink = GameObject.Find("InputFieldUrlLink").GetComponent<TMP_InputField>();
+        //TMP_ChatInput.onSubmit.AddListener(DisplayMeshTextBox);
+        MusicDropDown = GameObject.Find("MusicDropdown").GetComponent<TMP_Dropdown>();
 
         //Hide the chat UI initially
+        playlistCollider = GameObject.Find("playlist_trigger");
         chatRoomCollider.GetComponent<ToggleChatGui>().ChatCanvasGroup.SetActive(false);
+        playlistCollider.GetComponent<ToggleMusicGui>().MusicPlayerCanvasGroup.SetActive(false);
 
+    }
+    //--------------------------------------------------------------------------
+    void OpenSharedLinkFromMusicDropDown(){
 
+      if (MusicDropDown == null){
+        return;
+      }
+
+      string URL = MusicDropDown.options[MusicDropDown.value].text;
+      Debug.LogError("OpenSharedLinkFromMusicDropDown: " + URL);
+      // https://docs.unity3d.com/Manual/webgl-interactingwithbrowserscripting.html
+
+      OpenBrowserTabJS(URL);
     }
     //--------------------------------------------------------------------------
     // Update is called once per frame
     void Update()
     {
-        if (Input.GetKeyUp(KeyCode.T) && !isChatting)
-        {
-            isChatting = true;
-            chatInput = "";
-        }
 
         //Hide messages after timer is expired
         for (int i = 0; i < chatMessages.Count; i++)
@@ -128,7 +158,7 @@ public class PUN2_Chat : MonoBehaviourPun
         }
     }
     //--------------------------------------------------------------------------
-    void OnGUI()
+  void OnGUI()
     {
 
         if (Event.current.type == EventType.KeyDown && Event.current.keyCode == KeyCode.Return)
@@ -136,7 +166,28 @@ public class PUN2_Chat : MonoBehaviourPun
           var message = string.Format ("{0}", FormatEmoji(TMP_ChatInput.text));
 
           photonView.RPC("SendChat", RpcTarget.All, PhotonNetwork.LocalPlayer, message);
+
+          if (playlistCollider.GetComponent<ToggleMusicGui>().MusicPlayerCanvasGroup.activeSelf){
+              photonView.RPC("PostLink", RpcTarget.All, PhotonNetwork.LocalPlayer, InputFieldUrlLink.text);
+              InputFieldUrlLink.text = "";
+          }
+
         }
+
+        DisplayMeshTextBox();
+
+    }
+    //--------------------------------------------------------------------------
+    [PunRPC]
+    void PostLink(Player sender, string message)
+    {
+      Debug.LogError("PostLink");
+      if (MusicDropDown != null){
+          if (message.StartsWith("http://") || message.StartsWith("https://")){
+              MusicDropDown.options.Add (new TMP_Dropdown.OptionData() {text=message});
+          }
+
+      }
 
     }
     //--------------------------------------------------------------------------

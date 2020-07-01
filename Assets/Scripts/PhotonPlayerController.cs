@@ -9,9 +9,13 @@ public class PhotonPlayerController : MonoBehaviour
     private float lastPressedTime = 0.0f;
     public static PhotonPlayerController localPlayer;
 
+    Rigidbody playerRB;
+
     void Start()
     {
         photonView = GetComponent<PhotonView>();
+
+        playerRB = GetComponent<Rigidbody>();
 
         if (photonView.IsMine)
         {
@@ -58,8 +62,10 @@ public class PhotonPlayerController : MonoBehaviour
 
         Vector3 pos = this.transform.position;
         pos += direction.RemoveDiagonal().normalized * Time.deltaTime; // map the inputs onto the grid 
+
         transform.position = pos;
         }
+        playerRB.velocity = Vector3.zero;
      
 
         if (Input.GetKey(KeyCode.U))
