@@ -26,10 +26,7 @@ public class PhotonBoot : MonoBehaviourPunCallbacks
     void Start()
     {
         Instance = this;
-
         Connect();
-
-        
     }
 
     public void Connect()
@@ -88,28 +85,21 @@ public class PhotonBoot : MonoBehaviourPunCallbacks
             return;
         }
 
-        // FUZZY BINAIRES CODE - BEGIN
-
+        // settings for networked objects such as player, pins 
         GameObject player;
 
         if (!isOffline)
         {
-            player = PhotonNetwork.Instantiate("Player/Player_LED", new Vector3(0,0.2f,0), Quaternion.identity, 0);
+            player = PhotonNetwork.Instantiate("Player/Player_LED", new Vector3(0f, 0f, 0f), Quaternion.identity, 0);
         }
         else
         {
-            player = PhotonNetwork.Instantiate("Player/Player_LED", new Vector3(0, 0.2f, 0), Quaternion.identity, 0);
-
-
+            player = PhotonNetwork.Instantiate("Player/Player_LED", new Vector3(0f, 0f, 0f), Quaternion.identity, 0);
         }
 
         player.gameObject.tag = "Player";
 
-
         pinController?.initializePinState();
-
-        // FUZZY BINAIRES CODE - END
-
 
         connectedToRoom = true;
 
