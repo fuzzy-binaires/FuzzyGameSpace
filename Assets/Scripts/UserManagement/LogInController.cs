@@ -7,6 +7,7 @@ using System.IO;
 using UnityEngine.UI;
 using TMPro;
 using UnityEngine.SceneManagement;
+using UnityEngine.Networking;
 
 #if UNITY_EDITOR 
 using UnityEditor;
@@ -22,18 +23,19 @@ public class LogInController : MonoBehaviour
     [SerializeField] string sceneFuzzyHouse;
     [SerializeField] string sceneLogInFailed;
 
-    const string serverPath = "";
+    static readonly string serverPath = "http://134.122.74.56/space/appdata/"; // use path to save data on virtual machine
     static string credentialsLocalPath() => Application.dataPath + "/Resources/" + "credentials.json";
     static string credentialsServerPath() => serverPath + "credentials.json"; // to put hard coded server path
 
 
-    #if UNITY_EDITOR
+  //  #if UNITY_EDITOR
 
     void Awake()
     {
         emailContent.text = PlayerPrefs.GetString("email_cookie");
     }
 
+     #if UNITY_EDITOR
     [Button]
     void SaveCredentialsToFile()
     {
@@ -43,6 +45,7 @@ public class LogInController : MonoBehaviour
         writer.Close();
         AssetDatabase.ImportAsset(credentialsLocalPath());
     }
+    #endif
 
     [Button]
     LogInData ReadLocalCredentials()
@@ -54,33 +57,51 @@ public class LogInController : MonoBehaviour
         return JsonUtility.FromJson<LogInData>(json);
     }
 
-    #endif
+   // #endif
 
     public void AttemptLogIn()
     {
+        StartCoroutine(DownloadString(credentialsServerPath(), OnReceivedLogInData));
+    }    
+
+    void OnReceivedLogInData (string json)
+    {
+        // once json is received, we parse it directly to the class LogInData
+        LogInData data = JsonUtility.FromJson<LogInData>(json);
+
+        // log-in data fields
         string email = emailContent.text;
         PlayerPrefs.SetString("email_cookie", email);
-
         string password = passwordContent.text;
 
-        LogInData data = ReadLocalCredentials();
-
-        //Debug.Log("Attempting Login for " + email + " and " + password);
-
+        // we check if login is correct
         if (DoesLogInExist(data, email, password) == true) {
             SceneManager.LoadScene(sceneFuzzyHouse);
         } else {
             SceneManager.LoadScene(sceneLogInFailed);
         }
-    }    
+    }
 
-    LogInData ReadServerCredentials()
+    IEnumerator DownloadString(string uri, Action<string> callback)
     {
-        StreamReader reader = new StreamReader(credentialsLocalPath());
-        string json = reader.ReadToEnd();
-        reader.Close();
-        //Debug.Log("json: " + json);
-        return JsonUtility.FromJson<LogInData>(json);
+        using (UnityWebRequest webRequest = UnityWebRequest.Get(uri))
+        {
+            // request and wait for page
+            yield return webRequest.SendWebRequest();
+
+            string[] pages = uri.Split('/');
+            int page = pages.Length - 1;
+
+            if (webRequest.isNetworkError)
+            {
+                Debug.LogError(pages[page] + ": Error: " + webRequest.error);
+            }
+            else
+            {
+                callback(webRequest.downloadHandler.text);
+                //Debug.Log(pages[page] + ":\nReceived: " + webRequest.downloadHandler.text);
+            }
+        }
     }
 
     static bool DoesLogInExist (LogInData logInData, string email, string password) {
