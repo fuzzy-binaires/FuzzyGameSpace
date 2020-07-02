@@ -73,8 +73,8 @@
                 float grayscale = dot(tex2D(_MainTex, i.uv).rgb, float3(0.3, 0.59, 0.11));
                 float ditheredValue = step(ditherValue, texColor);
                 float4 col = lerp(_Color1, _Color2, grayscale);
-                //return ditheredValue * col * tex2D(_MainTex, i.uv) / grayscale;
-                return ditheredValue * col;
+                return ditheredValue * col * tex2D(_MainTex, i.uv) / grayscale;
+                //return ditheredValue * col;
                 //return ditheredValue * lerp(tex2D(_MainTex, i.uv)*2, col, 0.5f);
             }
 
