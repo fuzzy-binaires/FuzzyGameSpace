@@ -12,7 +12,7 @@ public class PinController : MonoBehaviour
     {
         setupPins();
 
-        //pinSelectedGizmo = GameObject.Find("pinSelectedGizmo");
+        pinSelectedGizmo = GameObject.Find("pinSelectGizmo");
         pinSelectedGizmo.transform.position = new Vector3 (0, -1, 0);
         StartCoroutine("rotatePinGizmoForeeeeever");
     }
