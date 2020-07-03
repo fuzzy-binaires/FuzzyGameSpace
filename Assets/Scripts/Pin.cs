@@ -27,7 +27,7 @@ public class Pin : MonoBehaviour
     {
         // Set pinId by GO name
         pinId = int.Parse(this.gameObject.name.TrimStart('p', 'i', 'n', '_'));
-        description = "== " + pinId + " IS EMPTY" + " ==";
+        description = "empty";
 
         thisCollider = GetComponent<Collider>();
 
@@ -74,6 +74,11 @@ public class Pin : MonoBehaviour
     public string getDescription()
     {
         return description;
+    }
+
+    public void setDescription(string text)
+    {
+        description = text;
     }
 
     public bool getIsEmpty()
