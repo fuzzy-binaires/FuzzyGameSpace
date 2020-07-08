@@ -5,11 +5,11 @@ using SimpleJSON;
 using System.IO;
 
 
-public class Database : MonoBehaviour
+public class PinDatabase : MonoBehaviour
 {
 
     // MAKE IT A SINGLETON
-    public static Database instance = null; 
+    public static PinDatabase instance = null; 
 
     public TextAsset jsonPath;
     private static JSONNode db;

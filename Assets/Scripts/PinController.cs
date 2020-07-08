@@ -2,19 +2,54 @@
 using System.Collections.Generic;
 using UnityEngine;
 using SimpleJSON;
+using TMPro;
+using NaughtyAttributes;
+using System.IO;
 
 public class PinController : MonoBehaviour
 {
     private int selectedPin = -1;
     public GameObject pinSelectedGizmo;
 
+    private bool userTyping = false;
+    public GameObject pinConnector;
+
+    public GameObject pinGui;
+    //public TextMeshProUGUI pinInputText;
+    public TMP_InputField pinInputText;
+
+    private bool chooseServerPath = false;
+    // DATABASE STUFF
+    [SerializeField] PinData pinDataEditor;
+    static readonly string serverPath = "http://134.122.74.56/space/appdata/"; // use path to save data on virtual machine
+    static string credentialsLocalPath() => Application.dataPath + "/Resources/" + "pinDatabase.json";
+    static string credentialsServerPath() => serverPath + "pinDatabase.json"; // to put hard coded server path
+
+
+
     void Start()
     {
         setupPins();
 
         pinSelectedGizmo = GameObject.Find("pinSelectGizmo");
-        pinSelectedGizmo.transform.position = new Vector3 (0, -1, 0);
-        StartCoroutine("rotatePinGizmoForeeeeever");
+        pinSelectedGizmo.transform.position = new Vector3(0, -1, 0);
+            StartCoroutine("rotatePinGizmoForeeeeever");
+
+        pinGui = GameObject.Find("pinConnectorGUI");
+
+        GameObject pinTextGO = pinGui.transform.Find("Canvas/pinInputField").gameObject;
+
+        //Component[] list = aaaa.GetComponents(typeof(Component));
+        //for (int i = 0; i < list.Length; i++)
+        //{
+        //    Debug.Log(list[i].name);
+        //}
+
+        pinInputText = pinTextGO.GetComponent<TMP_InputField>();
+        //pinInputText.text = "[ENTER to Save]";
+
+        pinGui.SetActive(false);
+
     }
 
     // Update is called once per frame
@@ -24,27 +59,68 @@ public class PinController : MonoBehaviour
         // ---- USER ACTS AGAINST A PIN - BEGIN
         if (Input.GetKeyUp(KeyCode.Return))
         {
-            if(selectedPin != -1)
+
+            if (selectedPin != -1)
             {
                 Pin pin = getPinById(selectedPin).GetComponent<Pin>();
-                Debug.Log("Pin " + selectedPin + " isEmpty = " + pin.getIsEmpty());
 
-                if (pin.getIsEmpty())
+                if (!userTyping)
                 {
-                    // LAUNCH HTML INTERFACE FOR => ADDING A RESOURCE
-                    Debug.Log("-|| USER WANTS TO ADD TO PIN " + selectedPin);
-                    pin.setIsEmpty(false);
+                    //Debug.Log("Pin " + selectedPin + " isEmpty = " + pin.getIsEmpty());
 
+                    if (pin.getIsEmpty())
+                    {
+                        // LAUNCH HTML INTERFACE FOR => ADDING A RESOURCE
+                        Debug.Log("-|| USER WANTS TO ADD TO PIN " + selectedPin);
+                        userTyping = true;
+                        pinInputText.text = "[ENTER to Save]";
+
+                        pinGui.SetActive(true);
+
+                        // DISABLE WASD MOVEMENT
+
+
+                    }
+                    else
+                    {
+                        // LAUNCH HTML INTERFACE FOR => READING A RESOURCE
+                        //Debug.Log("-|| USER READS PIN " + selectedPin);
+                    }
+
+
+                    //Debug.Log("Pin " + selectedPin + " isEmpty = " + pin.getIsEmpty());
                 }
                 else
                 {
-                    // LAUNCH HTML INTERFACE FOR => READING A RESOURCE
-                    Debug.Log("-|| USER READS PIN " + selectedPin);
+                    // USER IS TYPING, AND SINCE WE ARE INSIDE DE GetKeyUp.Return, it means she confirms input
+                    pin.setIsEmpty(false);
+                    userTyping = false;
+                    pinGui.SetActive(false);
+
+                    // TODO AND SAVE THE DATA
+                    pin.setDescription(pinInputText.text);
+
+                    savePinDataToFile();
+
+
+                    //Debug.Log(getPinById(3).GetComponent<Pin>().getDescription());
+
                 }
-
-
-                Debug.Log("Pin " + selectedPin + " isEmpty = " + pin.getIsEmpty());
             }
+
+        }
+
+
+
+        if (Input.GetKeyUp(KeyCode.Escape))
+        {
+            if (userTyping)
+            {
+                userTyping = false;
+                pinGui.SetActive(false);
+
+            }
+
         }
         // ---- USER ACTS AGAINST A PIN - END
 
@@ -54,6 +130,7 @@ public class PinController : MonoBehaviour
     private void setupPins()
     {
 
+        pinDataEditor.setup(transform.childCount);
 
         foreach (Transform childPin in transform)
         {
@@ -73,14 +150,17 @@ public class PinController : MonoBehaviour
         // But it cannot be initialize before any Player enters a room. Thus I call it from PhotonBoot when PlayerEnters
         //Debug.Log(Database.getPinData(0));
 
+        PinData pinDataInDB = readPinDataFromFile();
+
         for (int i = 0; i < transform.childCount; i++)
         {
 
-            JSONNode pinData = Database.getPinData(i);
+            //JSONNode pinData = PinDatabase.getPinData(i);
+            string description = pinDataInDB.pinDescriptions[i].text;
 
             Pin pin = transform.GetChild(i).gameObject.GetComponent<Pin>();
 
-            if (!pinData["description"].Equals("empty"))
+            if (!description.Equals("empty"))
             {
                 //pin.setIsEmpty(false);
                 StartCoroutine(setPinIsEmptyWithDelay(i / 20.0f, pin, false));
@@ -116,7 +196,7 @@ public class PinController : MonoBehaviour
     private void updatePinSelectionGizmo()
     {
         Vector3 pinPos = getPinByName(selectedPin).transform.position;
-        pinSelectedGizmo.transform.position = pinPos + new Vector3(0,0.5f,0);
+        pinSelectedGizmo.transform.position = pinPos + new Vector3(0, 0.5f, 0);
 
         //Debug.Log("Updating Gizmo to Pin: " + selectedPin);
 
@@ -128,7 +208,7 @@ public class PinController : MonoBehaviour
         // ALWAYS ON SELECTED PIN
 
         string pinDescription = getPinByName(selectedPin).GetComponent<Pin>().getDescription();
-        Debug.Log(pinDescription);
+        //Debug.Log(pinDescription);
     }
 
     public GameObject getPinByName(int id)
@@ -157,5 +237,37 @@ public class PinController : MonoBehaviour
         }
     }
 
+    [Button] // FROM NAUGHTYATTRIBUTES
+    private void savePinDataToFile()
+    {
+
+        // ASSEMBLE PIN DATA INTO ARRAY
+        //string[]  escriptions = new string[transform.childCount];
+        for(int i=0; i< transform.childCount; i++)
+        {
+            pinDataEditor.pinDescriptions[i].text = getPinById(i).gameObject.GetComponent<Pin>().getDescription();
+        }
+
+
+        // TO FILE
+
+
+        string json = JsonUtility.ToJson(pinDataEditor);
+        StreamWriter writer = new StreamWriter(chooseServerPath ? credentialsServerPath() : credentialsLocalPath());
+        writer.WriteLine(json);
+        writer.Close();
+        //AssetDatabase.ImportAsset(credentialsLocalPath());
+    }
+
+    [Button]
+    private PinData readPinDataFromFile()
+    {
+        StreamReader reader = new StreamReader(chooseServerPath ? credentialsServerPath() : credentialsLocalPath());
+        string json = reader.ReadToEnd();
+        reader.Close();
+        //Debug.Log("json: " + json);
+        return JsonUtility.FromJson<PinData>(json);
+
+    }
 
 }
