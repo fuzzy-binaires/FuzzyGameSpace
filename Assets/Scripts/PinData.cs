@@ -29,23 +29,3 @@ public class PinData
         pinDescriptions[slot].text = text;
     }
 }
-
-
-/*
-using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
-
-[System.Serializable]
-public class LogInData
-{
-    [System.Serializable]
-    public class Credentials
-    {
-        public string email;
-        public string password;
-    }
-    public Credentials[] credentials;
-
-}
-*/

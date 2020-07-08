@@ -36,7 +36,7 @@ public class PinController : MonoBehaviour
 
         pinGui = GameObject.Find("pinConnectorGUI");
 
-        GameObject aaaa = pinGui.transform.Find("Canvas/pinInputField").gameObject;
+        GameObject pinTextGO = pinGui.transform.Find("Canvas/pinInputField").gameObject;
 
         //Component[] list = aaaa.GetComponents(typeof(Component));
         //for (int i = 0; i < list.Length; i++)
@@ -44,7 +44,7 @@ public class PinController : MonoBehaviour
         //    Debug.Log(list[i].name);
         //}
 
-        pinInputText = aaaa.GetComponent<TMP_InputField>();
+        pinInputText = pinTextGO.GetComponent<TMP_InputField>();
         //pinInputText.text = "[ENTER to Save]";
 
         pinGui.SetActive(false);
@@ -83,7 +83,7 @@ public class PinController : MonoBehaviour
                     else
                     {
                         // LAUNCH HTML INTERFACE FOR => READING A RESOURCE
-                        Debug.Log("-|| USER READS PIN " + selectedPin);
+                        //Debug.Log("-|| USER READS PIN " + selectedPin);
                     }
 
 
@@ -207,7 +207,7 @@ public class PinController : MonoBehaviour
         // ALWAYS ON SELECTED PIN
 
         string pinDescription = getPinByName(selectedPin).GetComponent<Pin>().getDescription();
-        Debug.Log(pinDescription);
+        //Debug.Log(pinDescription);
     }
 
     public GameObject getPinByName(int id)
