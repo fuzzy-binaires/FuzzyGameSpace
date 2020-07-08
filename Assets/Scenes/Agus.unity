@@ -3136,6 +3136,7 @@ MonoBehaviour:
   popUpCanvasGroup: {fileID: 0}
   playerIsDeciding: 0
   roomName: THE LIBRARY
+  webURLName: antennaRoom
 --- !u!1 &763317012
 GameObject:
   m_ObjectHideFlags: 0
@@ -6529,6 +6530,7 @@ MonoBehaviour:
   popUpCanvasGroup: {fileID: 0}
   playerIsDeciding: 0
   roomName: THE SCREENING ROOM
+  webURLName: screeningRoom
 --- !u!1 &1453389357
 GameObject:
   m_ObjectHideFlags: 0
@@ -6590,6 +6592,7 @@ MonoBehaviour:
   popUpCanvasGroup: {fileID: 0}
   playerIsDeciding: 0
   roomName: THE WORKSHOPS
+  webURLName: workshopsRoom
 --- !u!1 &1453940281
 GameObject:
   m_ObjectHideFlags: 0

@@ -18,6 +18,7 @@ public class PinController : MonoBehaviour
     //public TextMeshProUGUI pinInputText;
     public TMP_InputField pinInputText;
 
+    private bool chooseServerPath = false;
     // DATABASE STUFF
     [SerializeField] PinData pinDataEditor;
     static readonly string serverPath = "http://134.122.74.56/space/appdata/"; // use path to save data on virtual machine
@@ -249,8 +250,10 @@ public class PinController : MonoBehaviour
 
 
         // TO FILE
+
+
         string json = JsonUtility.ToJson(pinDataEditor);
-        StreamWriter writer = new StreamWriter(credentialsLocalPath());
+        StreamWriter writer = new StreamWriter(chooseServerPath ? credentialsServerPath() : credentialsLocalPath());
         writer.WriteLine(json);
         writer.Close();
         //AssetDatabase.ImportAsset(credentialsLocalPath());
@@ -259,7 +262,7 @@ public class PinController : MonoBehaviour
     [Button]
     private PinData readPinDataFromFile()
     {
-        StreamReader reader = new StreamReader(credentialsLocalPath());
+        StreamReader reader = new StreamReader(chooseServerPath ? credentialsServerPath() : credentialsLocalPath());
         string json = reader.ReadToEnd();
         reader.Close();
         //Debug.Log("json: " + json);

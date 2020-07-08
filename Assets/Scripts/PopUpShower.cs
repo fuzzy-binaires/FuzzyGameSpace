@@ -2,27 +2,32 @@
 using System.Collections.Generic;
 using UnityEngine;
 using TMPro;
+using System.Runtime.InteropServices;
 
 public class PopUpShower : MonoBehaviour
 {
 
-    //public Collider thisCollider;
+    [DllImport("__Internal")]
+    private static extern void OpenBrowserTabJS(string url);
+
     public TMP_Text popUpText;
     public GameObject popUpCanvasGroup;
 
     public bool playerIsDeciding;
 
     public string roomName;
+    public string webURLName;
 
     void Start()
     {
-        //thisCollider = GetComponent<Collider>();
 
         popUpCanvasGroup = GameObject.Find("RoomConfirmPopUp");
         GameObject popUpTextGO = GameObject.Find("RoomConfirmPopUp/Canvas/popUpText").gameObject;
         popUpText = popUpTextGO.GetComponent<TMP_Text>();
         popUpText.text = "";
 
+        webURLName = "http://134.122.74.56/" + webURLName;
+        Debug.Log(webURLName);
 
         playerIsDeciding = false;
 
@@ -36,7 +41,13 @@ public class PopUpShower : MonoBehaviour
             if (playerIsDeciding)
             {
                 // OPEN ROOM'S WEBPAGE
-                Debug.Log("Open WebPage for Room" + roomName);
+                //Debug.Log("Open WebPage for Room" + roomName);
+
+                OpenBrowserTabJS(webURLName);
+                playerIsDeciding = false;
+                popUpText.text = "";
+
+
             }
 
         }
@@ -50,7 +61,7 @@ public class PopUpShower : MonoBehaviour
 
             playerIsDeciding = true;
             //popUpCanvasGroup.SetActive(true);
-            popUpText.text = "<size=20>Press ENTER to leave to:\n<size=30>" + roomName;
+            popUpText.text = "<size=20>Press ENTER to go to:\n<size=30>| " + roomName + " | ";
 
         }
     }
