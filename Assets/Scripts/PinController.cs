@@ -18,7 +18,7 @@ public class PinController : MonoBehaviour
     //public TextMeshProUGUI pinInputText;
     public TMP_InputField pinInputText;
 
-    private bool chooseServerPath = false;
+    private bool chooseServerPath = true;
     // DATABASE STUFF
     [SerializeField] PinData pinDataEditor;
     static readonly string serverPath = "http://134.122.74.56/space/appdata/"; // use path to save data on virtual machine
