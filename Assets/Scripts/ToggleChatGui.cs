@@ -7,7 +7,7 @@ public class ToggleChatGui : MonoBehaviour
    public bool isChatGuiVisible = false;
    public GameObject ChatCanvasGroup;
     // Start is called before the first frame update
-    void Start()
+    void Awake()
     {
       ChatCanvasGroup = GameObject.Find("ChatCanvasGroup");
 
