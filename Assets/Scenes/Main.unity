@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 705507994}
-  m_IndirectSpecularColor: {r: 0.45135593, g: 0.5009364, b: 0.5727935, a: 1}
+  m_IndirectSpecularColor: {r: 0.45135623, g: 0.5009369, b: 0.5727935, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -2297,7 +2297,7 @@ MonoBehaviour:
   m_HandleRect: {fileID: 637486940}
   m_Direction: 2
   m_Value: 0
-  m_Size: 0.9999956
+  m_Size: 0.8784661
   m_NumberOfSteps: 0
   m_OnValueChanged:
     m_PersistentCalls:
@@ -2658,7 +2658,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 1}
   m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: 0, y: 0.000026451851}
+  m_AnchoredPosition: {x: 0, y: 8.121223}
   m_SizeDelta: {x: 0, y: 300}
   m_Pivot: {x: 0, y: 1}
 --- !u!1 &290820018
@@ -3099,6 +3099,7 @@ GameObject:
   m_Component:
   - component: {fileID: 312315731}
   - component: {fileID: 312315732}
+  - component: {fileID: 312315733}
   m_Layer: 0
   m_Name: playlist_trigger
   m_TagString: Untagged
@@ -3133,6 +3134,20 @@ BoxCollider:
   serializedVersion: 2
   m_Size: {x: 0.44547606, y: 0.4135729, z: 0.14094388}
   m_Center: {x: 0.0063984394, y: 0.15618092, z: -0.5084248}
+--- !u!114 &312315733
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 312315730}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 11100c92af3aa4395b36302cf99d0df8, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  isMusicGuiVisible: 0
+  MusicPlayerCanvasGroup: {fileID: 0}
 --- !u!1 &324109465
 GameObject:
   m_ObjectHideFlags: 0

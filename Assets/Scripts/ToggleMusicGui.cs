@@ -7,9 +7,9 @@ public class ToggleMusicGui : MonoBehaviour
     public bool isMusicGuiVisible = false;
     public GameObject MusicPlayerCanvasGroup;
     // Start is called before the first frame update
-    void Start()
+    void Awake()
     {
-    //  MusicPlayerCanvasGroup = GameObject.Find("MusicPlayerCanvasGroup");
+      MusicPlayerCanvasGroup = GameObject.Find("MusicPlayerCanvasGroup");
     }
 
     // Update is called once per frame
