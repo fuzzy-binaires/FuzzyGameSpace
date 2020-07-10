@@ -12,29 +12,21 @@ public class LCD_ScreenController : MonoBehaviour
     public float scrollSpeed = 1.0f;
     private string originalText;
 
+    public float serverReadPeriod = 20.0f; //How often we refresh the string from the server
+
     private TMP_Text cloneText;
     private RectTransform textRectTransform;
-    private string sourceText;
-    private string tempText;
+    
+    private string credentialsPath;
 
     [SerializeField] LcdData lcdDataEditor;
 
-    static readonly string serverPath = "http://134.122.74.56/space/appdata/"; // use path to save data on virtual machine
-    //static string credentialsLocalPath() => Application.dataPath + "/Resources/" + "lcdDatabase.json";
-    static string credentialsServerPath() => serverPath + "lcdDatabase.json"; // to put hard coded server path
-
+    
 
     [System.Serializable]
     public class LcdData
     {
-        [System.Serializable]
-        public class LcdDescription
-        {
             public string text;
-        }
-        public LcdDescription pinDescriptions;
-
-
     }
 
 
@@ -47,9 +39,18 @@ public class LCD_ScreenController : MonoBehaviour
 
 
         //StartCoroutine("Scroll");
-        InvokeRepeating("Scroll", 5.0f, 0.3f);
-        InvokeRepeating("UpdateJsonFromServer", 1.0f, 10.0f);
+        InvokeRepeating("Scroll", 1.0f, 0.3f);
+        InvokeRepeating("UpdateJsonFromServer", 1.0f, serverReadPeriod);
         //Debug.Log("In this Done");
+
+        // use path to save data on virtual machine
+        #if UNITY_EDITOR
+            credentialsPath = Application.dataPath + "/Resources/" + "lcdDatabase.json";
+            
+        #else
+            string serverPath = "http://134.122.74.56/space/appdata/";
+            credentialsPath = serverPath + "lcdDatabase.json"; // to put hard coded server path
+        #endif
 
     }
 
@@ -68,23 +69,28 @@ public class LCD_ScreenController : MonoBehaviour
         string text = LCDText.text;
 
 
-
-        LCDText.text = text.Substring(1, text.Length - 1) + text.Substring(0, 1); ;
+        if (text.Length > 1){
+            LCDText.text = text.Substring(1, text.Length - 1) + text.Substring(0, 1); 
+        }
+        
 
     }
 
     void UpdateJsonFromServer()
     {
-        readDataFromFile();
+        var data = readDataFromFile();
+
+        LCDText.text = data.text;
     }
 
 
     private LcdData readDataFromFile()
     {
-        StreamReader reader = new StreamReader(credentialsServerPath());
+        Debug.Log(credentialsPath);
+        StreamReader reader = new StreamReader(credentialsPath);
         string json = reader.ReadToEnd();
         reader.Close();
-        //Debug.Log("json: " + json);
+        Debug.Log("json: " + json);
         return JsonUtility.FromJson<LcdData>(json);
 
     }
