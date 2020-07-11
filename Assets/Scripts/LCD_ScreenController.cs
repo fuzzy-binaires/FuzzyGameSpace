@@ -53,7 +53,8 @@ public class LCD_ScreenController : MonoBehaviour
         // use path to save data on virtual machine
         #if UNITY_EDITOR
             filePath = Application.dataPath + "/Resources/" + "lcdDatabase.json";
-            
+            LcdData data = readDataFromFile();
+            LCDText.text = data.text;
         #else
             
             filePath = serverPath();
@@ -66,13 +67,8 @@ public class LCD_ScreenController : MonoBehaviour
 
     }
     void RequestJsonFromServer(){
-         #if UNITY_EDITOR
-            LcdData data = readDataFromFile();
-            LCDText.text = data.text;
-        #else
             Debug.LogError("requesting from server " + filePath);
             StartCoroutine(DownloadString(filePath, OnReceivedLcdData));
-        #endif
     }
     void OnReceivedLcdData (string json)
     {
@@ -80,6 +76,7 @@ public class LCD_ScreenController : MonoBehaviour
             LcdData data = JsonUtility.FromJson<LcdData>(json);
             Debug.LogError("text " + data.text);
             LCDText.text = data.text;
+            Debug.LogError("LCDText.text " + LCDText.text);
        
     }
 
