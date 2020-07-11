@@ -1,8 +1,13 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using TMPro;
+using NaughtyAttributes;
+using System;
 using System.IO;
+using UnityEngine.UI;
+using TMPro;
+using UnityEngine.SceneManagement;
+using UnityEngine.Networking;
 
 
 public class LCD_ScreenController : MonoBehaviour
@@ -17,7 +22,7 @@ public class LCD_ScreenController : MonoBehaviour
     private TMP_Text cloneText;
     private RectTransform textRectTransform;
     
-    private string credentialsPath;
+    private string filePath;
 
     [SerializeField] LcdData lcdDataEditor;
 
@@ -30,6 +35,8 @@ public class LCD_ScreenController : MonoBehaviour
     }
 
 
+    static string serverPath() =>  "http://134.122.74.56/space/appdata/lcdDatabase.json"; 
+
 
     void Start()
     {
@@ -40,24 +47,42 @@ public class LCD_ScreenController : MonoBehaviour
 
         //StartCoroutine("Scroll");
         InvokeRepeating("Scroll", 1.0f, 0.3f);
-        InvokeRepeating("UpdateJsonFromServer", 1.0f, serverReadPeriod);
+        //InvokeRepeating("UpdateJsonFromServer", 1.0f, serverReadPeriod);
         //Debug.Log("In this Done");
 
         // use path to save data on virtual machine
         #if UNITY_EDITOR
-            credentialsPath = Application.dataPath + "/Resources/" + "lcdDatabase.json";
+            filePath = Application.dataPath + "/Resources/" + "lcdDatabase.json";
             
         #else
-            string serverPath = "http://134.122.74.56/space/appdata/";
-            credentialsPath = serverPath + "lcdDatabase.json"; // to put hard coded server path
+            
+            filePath = serverPath();
+            InvokeRepeating("RequestJsonFromServer",  1.0f, serverReadPeriod);
         #endif
 
+        Debug.LogError("!!!!! " + filePath);
+
+        
+
+    }
+    void RequestJsonFromServer(){
+         #if UNITY_EDITOR
+            LcdData data = readDataFromFile();
+            LCDText.text = data.text;
+        #else
+            Debug.LogError("requesting from server " + filePath);
+            StartCoroutine(DownloadString(filePath, OnReceivedLcdData));
+        #endif
+    }
+    void OnReceivedLcdData (string json)
+    {
+            Debug.LogError("CallBack " + json);
+            LcdData data = JsonUtility.FromJson<LcdData>(json);
+            Debug.LogError("text " + data.text);
+            LCDText.text = data.text;
+       
     }
 
-    private void Update()
-    {
-        //LCDText.text = TExtDelJSON; // TODO
-    }
 
     void Scroll()
     {
@@ -76,22 +101,38 @@ public class LCD_ScreenController : MonoBehaviour
 
     }
 
-    void UpdateJsonFromServer()
-    {
-        var data = readDataFromFile();
-
-        LCDText.text = data.text;
-    }
-
-
     private LcdData readDataFromFile()
     {
-        Debug.Log(credentialsPath);
-        StreamReader reader = new StreamReader(credentialsPath);
-        string json = reader.ReadToEnd();
-        reader.Close();
+        Debug.Log(filePath);
+        string json = System.IO.File.ReadAllText(filePath);
+        
         Debug.Log("json: " + json);
         return JsonUtility.FromJson<LcdData>(json);
 
+    }
+
+    IEnumerator DownloadString(string uri, Action<string> callback)
+    {
+        using (UnityWebRequest webRequest = UnityWebRequest.Get(uri))
+        {
+            // request and wait for page
+            yield return webRequest.SendWebRequest();
+
+            string[] pages = uri.Split('/');
+            int page = pages.Length - 1;
+
+            if (webRequest.isNetworkError)
+            {
+                Debug.LogError(pages[page] + ": Error: " + webRequest.error);
+            }
+            else
+            {
+                callback(webRequest.downloadHandler.text);
+                Debug.LogError(pages[page] + ":\nReceived: " + webRequest.downloadHandler.text);
+
+                LcdData data = JsonUtility.FromJson<LcdData>(webRequest.downloadHandler.text);
+                LCDText.text = data.text;
+            }
+        }
     }
 }
