@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 using Photon.Pun;
-
+using TMPro;
 public class PhotonPlayerController : MonoBehaviour
 {
     private PhotonView photonView;
@@ -11,18 +11,37 @@ public class PhotonPlayerController : MonoBehaviour
 
     Rigidbody playerRB;
 
+    private GUIStyle playerNameGuiStyle = new GUIStyle(); 
+
     void Start()
     {
         photonView = GetComponent<PhotonView>();
 
         playerRB = GetComponent<Rigidbody>();
 
+       
+
         if (photonView.IsMine)
         {
             // this is the local player, can't be overwritten.
             localPlayer = this;
-        }
+
+        } 
+
+        playerNameGuiStyle.fontSize = 30;
     }
+
+     void OnGUI()
+     {
+         Vector3 pos = Camera.main.WorldToScreenPoint(this.transform.position );
+         var rect = new Rect(pos.x-10, pos.y-50, pos.x+500, pos.y+500);
+         
+          string name = photonView.Owner.NickName;
+          if (string.IsNullOrEmpty(name))
+            name = "bob";
+
+          GUI.Label(rect , name, playerNameGuiStyle);
+     }
 
     void Update()
     {
@@ -81,7 +100,8 @@ public class PhotonPlayerController : MonoBehaviour
 
 
         }
-
+       
+       
     }
 
 }
