@@ -23,10 +23,6 @@ public class PUN2_Chat : MonoBehaviourPun
 
     public ScrollRect ChatScrollView;
 
-    public TMP_Dropdown MusicDropDown;
-
-    public Button PlaylistURLGoButton;
-
     private GameObject playlistCollider;
 
     private GameObject MusicPlayerCanvasGroup;
@@ -113,16 +109,14 @@ public class PUN2_Chat : MonoBehaviourPun
 
         //Let's chace a reference to the chatRoom objects
         chatRoomCollider = GameObject.Find("chatArea");
-        PlaylistURLGoButton = GameObject.Find("MusicGoUrl").GetComponent<Button>();
-        PlaylistURLGoButton.onClick.AddListener(OpenSharedLinkFromMusicDropDown);
 
         TMP_ChatInput  = GameObject.Find("chatInput").GetComponent<TMP_InputField>();
 
         TMP_ChatOutput = GameObject.Find("chatOutput").GetComponent<TMP_Text>();
         ChatScrollView = GameObject.Find("Scroll View").GetComponent<ScrollRect>();
-        InputFieldUrlLink = GameObject.Find("InputFieldUrlLink").GetComponent<TMP_InputField>();
-        //TMP_ChatInput.onSubmit.AddListener(DisplayMeshTextBox);
-        MusicDropDown = GameObject.Find("MusicDropdown").GetComponent<TMP_Dropdown>();
+        //InputFieldUrlLink = playlistCollider.GetComponent<CustomButtonList>().inputUrlTMP;
+        //GameObject.Find("InputFieldUrlLink").GetComponent<TMP_InputField>();
+        
 
         //Hide the chat UI initially
         playlistCollider = GameObject.Find("playlist_trigger");
@@ -130,19 +124,7 @@ public class PUN2_Chat : MonoBehaviourPun
         playlistCollider.GetComponent<ToggleMusicGui>().MusicPlayerCanvasGroup.SetActive(false);
 
     }
-    //--------------------------------------------------------------------------
-    void OpenSharedLinkFromMusicDropDown(){
-
-      if (MusicDropDown == null){
-        return;
-      }
-
-      string URL = MusicDropDown.options[MusicDropDown.value].text;
-      Debug.LogError("OpenSharedLinkFromMusicDropDown: " + URL);
-      // https://docs.unity3d.com/Manual/webgl-interactingwithbrowserscripting.html
-
-      OpenBrowserTabJS(URL);
-    }
+    
     //--------------------------------------------------------------------------
     // Update is called once per frame
     void Update()
@@ -168,8 +150,8 @@ public class PUN2_Chat : MonoBehaviourPun
           photonView.RPC("SendChat", RpcTarget.All, PhotonNetwork.LocalPlayer, message);
 
           if (playlistCollider.GetComponent<ToggleMusicGui>().MusicPlayerCanvasGroup.activeSelf){
-              photonView.RPC("PostLink", RpcTarget.All, PhotonNetwork.LocalPlayer, InputFieldUrlLink.text);
-              InputFieldUrlLink.text = "";
+              photonView.RPC("PostLink", RpcTarget.All, PhotonNetwork.LocalPlayer, playlistCollider.GetComponent<CustomButtonList>().GetInputUrl());//InputFieldUrlLink.text);
+              //InputFieldUrlLink.text = "";
           }
 
         }
@@ -181,13 +163,11 @@ public class PUN2_Chat : MonoBehaviourPun
     [PunRPC]
     void PostLink(Player sender, string message)
     {
-      Debug.LogError("PostLink");
-      if (MusicDropDown != null){
-          if (message.StartsWith("http://") || message.StartsWith("https://")){
-              MusicDropDown.options.Add (new TMP_Dropdown.OptionData() {text=message});
+      
+      if (message.StartsWith("http://") || message.StartsWith("https://")){
+              playlistCollider.GetComponent<CustomButtonList>().CreateButton(message);
           }
-
-      }
+          
 
     }
     //--------------------------------------------------------------------------
