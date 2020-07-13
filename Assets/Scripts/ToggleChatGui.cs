@@ -5,6 +5,8 @@ using UnityEngine;
 public class ToggleChatGui : MonoBehaviour
 {
    public bool isChatGuiVisible = false;
+
+   private bool insideCollider = false;
    public GameObject ChatCanvasGroup;
     // Start is called before the first frame update
     void Awake()
@@ -16,25 +18,40 @@ public class ToggleChatGui : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+       if (!isChatGuiVisible && insideCollider && Input.GetKeyUp(KeyCode.T)){
+               isChatGuiVisible = true;
+               ChatCanvasGroup.SetActive(true);
+             
+       }
 
+       if (isChatGuiVisible && Input.GetKeyDown(KeyCode.Escape)){
+          isChatGuiVisible = false;
+          ChatCanvasGroup.SetActive(false);
+       }
+    }
+
+    void OnGui(){
+       if (insideCollider && !isChatGuiVisible){
+           GUI.Label(new Rect(5, Screen.height - 25, 200, 25), "Press 'T' to chat");
+       }
     }
 
     private void OnTriggerEnter(Collider other)
     {
-       if(other.CompareTag("Player"))
+      if(other.CompareTag("Player"))
        {
-          isChatGuiVisible = true;
-          ChatCanvasGroup.SetActive(true);
+         insideCollider = true;
        }
 
     }
 
     private void OnTriggerExit(Collider other)
     {
+       
        if(other.CompareTag("Player"))
        {
-          isChatGuiVisible = false;
-          ChatCanvasGroup.SetActive(false);
+          insideCollider = false;
+          
        }
 
     }
