@@ -9,6 +9,8 @@ public class PhotonPlayerController : MonoBehaviour
     private float lastPressedTime = 0.0f;
     public static PhotonPlayerController localPlayer;
 
+    GameObject chatRoomCollider = null;
+
     Rigidbody playerRB;
 
     private GUIStyle playerNameGuiStyle = new GUIStyle(); 
@@ -18,6 +20,8 @@ public class PhotonPlayerController : MonoBehaviour
         photonView = GetComponent<PhotonView>();
 
         playerRB = GetComponent<Rigidbody>();
+
+        chatRoomCollider = GameObject.Find("chatArea");
 
        
 
@@ -49,6 +53,11 @@ public class PhotonPlayerController : MonoBehaviour
         if (!photonView.IsMine)
         {
             // this is not my player to move!
+            return;
+        }
+
+        if (chatRoomCollider.GetComponent<ToggleChatGui>().isChatGuiVisible){
+            //ignore player movement if chat window is active
             return;
         }
 
