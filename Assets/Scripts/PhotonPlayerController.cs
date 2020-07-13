@@ -17,13 +17,30 @@ public class PhotonPlayerController : MonoBehaviour
 
     private GUIStyle playerNameGuiStyle = new GUIStyle(); 
 
+    [SerializeField] MeshRenderer LED_Head;
+    [SerializeField] MeshRenderer LED_Neck;
+    [SerializeField] MeshRenderer LED_LowerNeck;
+    [SerializeField] MeshRenderer LED_Truck;
+
+
+
     void Start()
     {
         photonView = GetComponent<PhotonView>();
 
         playerRB = GetComponent<Rigidbody>();
 
-        userName.text = photonView.Owner.NickName;
+        string nickname = photonView.Owner.NickName;
+        string username = nickname.Substring(0, nickname.Length-3);
+        string usercolor = nickname.Substring(nickname.Length-3, 3);
+        Debug.Log("User joined! " + "username: " + username + " usercolor: " + usercolor);
+        userName.text = username;
+        Color c = HSBColor.StringToHue(usercolor).ToColor();
+        userName.color = c;
+        userName.UpdateFontAsset();
+        //userName.color = PlayerPrefs.GetString(LogInController.userColor_Pointer);
+
+        setColors(c);
 
         chatRoomCollider = GameObject.Find("chatArea");
 
@@ -36,6 +53,13 @@ public class PhotonPlayerController : MonoBehaviour
         playerNameGuiStyle.fontSize = 30;
     }
 
+
+    void setColors(Color c) {
+        LED_Head.material.color = c;
+        LED_Neck.material.color = c;
+        LED_LowerNeck.material.color = c;
+        LED_Truck.material.color = c;
+    }
     void Update()
     {
 

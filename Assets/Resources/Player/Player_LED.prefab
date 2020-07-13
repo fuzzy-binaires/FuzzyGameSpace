@@ -322,6 +322,10 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   userName: {fileID: 5575132893187830605}
+  LED_Head: {fileID: 8539547057823024010}
+  LED_Neck: {fileID: 6227731279234616619}
+  LED_LowerNeck: {fileID: 3209526406454330755}
+  LED_Truck: {fileID: 637958245988423902}
 --- !u!114 &6276561491268570912
 MonoBehaviour:
   m_ObjectHideFlags: 0

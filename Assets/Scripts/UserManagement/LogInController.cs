@@ -21,6 +21,10 @@ public class LogInController : MonoBehaviour
     [SerializeField] TMP_InputField passwordContent;
     [SerializeField] TMP_InputField userNameContent;
 
+    [SerializeField] Slider userColor;
+    
+
+
     [SerializeField] string sceneFuzzyHouse;
     [SerializeField] string sceneLogInFailed;
 
@@ -31,12 +35,15 @@ public class LogInController : MonoBehaviour
     public readonly static string userName_Pointer = "userName";
     public readonly static string email_Pointer = "email";
 
+    public readonly static string userColor_Pointer = "userColor";
+
   //  #if UNITY_EDITOR
 
     void Awake()
     {
         emailContent.text = PlayerPrefs.GetString(email_Pointer); // remember email
         userNameContent.text = PlayerPrefs.GetString(userName_Pointer); // remember username
+        userColor.value = HSBColor.StringToHue(PlayerPrefs.GetString(userColor_Pointer)).h; // remember hue
     }
 
      #if UNITY_EDITOR
@@ -62,6 +69,17 @@ public class LogInController : MonoBehaviour
     }
 
    // #endif
+   float colorHue;
+
+  
+   public void OnSliderValue(float value) {
+       colorHue = value;
+       string s = HSBColor.HueToString(colorHue);
+       Debug.Log("color value is: " + value + " HSB: " + new HSBColor(colorHue, 1f, 1f).ToString());
+       Debug.Log("HueToString: " + s);
+       Debug.Log(" StringToHue" + HSBColor.StringToHue(s).ToString());
+   }
+
 
     public void AttemptLogIn()
     {
@@ -79,6 +97,7 @@ public class LogInController : MonoBehaviour
         string userName = userNameContent.text;
         PlayerPrefs.SetString(email_Pointer, email);
         PlayerPrefs.SetString(userName_Pointer, userName);
+        PlayerPrefs.SetString(userColor_Pointer, HSBColor.HueToString(colorHue));
         string password = passwordContent.text;
 
         // we check if login is correct

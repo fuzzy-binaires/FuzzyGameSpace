@@ -156,6 +156,16 @@ public struct HSBColor
 		return "H:" + h + " S:" + s + " B:" + b;
 	}
 
+	public static string HueToString(float col) {
+		return ((int)Mathf.Floor(col * 255f)).ToString("D3");
+	}
+
+	public static HSBColor StringToHue(string s) {
+		int p = int.Parse(s); // creates a number between 0 and 255
+		float h = (float)p/255f;
+		return new HSBColor(h, 1f, 1f);
+	}
+
 	public static HSBColor Lerp(HSBColor a, HSBColor b, float t)
 	{
 		float h,s;

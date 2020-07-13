@@ -51,10 +51,10 @@ public class PhotonBoot : MonoBehaviourPunCallbacks
         Debug.Log("Photon: ConnectedToMaster -> " + PhotonNetwork.CloudRegion + ", " + PhotonNetwork.CurrentCluster);
 
         // get username and add a unique random ID 
+        //Debug.Log("input conncetion values" + PlayerPrefs.GetString(LogInController.userName_Pointer) + PlayerPrefs.GetString(LogInController.userColor_Pointer));
         PhotonNetwork.AuthValues = new AuthenticationValues(PlayerPrefs.GetString(LogInController.userName_Pointer) + Random.Range(0, 10000000).ToString("D8"));
         // make the username = nickname visible to all players
-        PhotonNetwork.LocalPlayer.NickName = PlayerPrefs.GetString(LogInController.userName_Pointer);
-
+        PhotonNetwork.LocalPlayer.NickName = PlayerPrefs.GetString(LogInController.userName_Pointer) + PlayerPrefs.GetString(LogInController.userColor_Pointer);
         PhotonNetwork.JoinLobby();
     }
 
@@ -100,7 +100,7 @@ public class PhotonBoot : MonoBehaviourPunCallbacks
 
         player.gameObject.tag = "Player";
 
-        pinController.initializePinState();
+        pinController?.initializePinState();
 
         connectedToRoom = true;
 
