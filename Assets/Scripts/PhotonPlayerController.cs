@@ -37,8 +37,9 @@ public class PhotonPlayerController : MonoBehaviour
 
         //Next is potentially unsafe code
         string nickname = photonView.Owner.NickName;
-        if (!string.IsNullOrEmpty(nickname)){
-            nickname = "bob";
+        if (!string.IsNullOrEmpty(nickname) || (nickname.Length-3) <= 0){
+            Debug.Log("Username " + nickname + " is too short");
+            nickname = "Anonymous_user111";
         }
         string username = nickname.Substring(0, nickname.Length-3);
         string usercolor = nickname.Substring(nickname.Length-3, 3);
