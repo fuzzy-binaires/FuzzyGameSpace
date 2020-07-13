@@ -152,7 +152,7 @@ public class PinController : MonoBehaviour
         // But it cannot be initialize before any Player enters a room. Thus I call it from PhotonBoot when PlayerEnters
         //Debug.Log(Database.getPinData(0));
 
-        pinData = readPinDataFromFile();
+        //pinData = readPinDataFromFile();
 
         for (int i = 0; i < transform.childCount; i++)
         {
@@ -295,7 +295,7 @@ public class PinController : MonoBehaviour
 
     void OnReceivedPinData(string json)
     {
-        Debug.Log(json);
+        //Debug.Log(json);
 
         PinData data = JsonUtility.FromJson<PinData>(json);
         Debug.Log(data);
@@ -310,7 +310,6 @@ public class PinController : MonoBehaviour
 
     IEnumerator DownloadString(string uri, Action<string> callback)
     {
-        Debug.Log(" begin DE Doewnload String");
 
         using (UnityWebRequest webRequest = UnityWebRequest.Get(uri))
         {
@@ -326,8 +325,6 @@ public class PinController : MonoBehaviour
             }
             else
             {
-                Debug.Log(" FINAL DE Doewnload String");
-
                 callback(webRequest.downloadHandler.text);
                 PinData data = JsonUtility.FromJson<PinData>(webRequest.downloadHandler.text);
 
