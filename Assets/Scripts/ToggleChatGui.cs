@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class ToggleChatGui : MonoBehaviour
 {
@@ -30,8 +31,9 @@ public class ToggleChatGui : MonoBehaviour
        }
     }
 
-    void OnGui(){
+    void OnGUI(){
        if (insideCollider && !isChatGuiVisible){
+          
            GUI.Label(new Rect(5, Screen.height - 25, 200, 25), "Press 'T' to chat");
        }
     }
