@@ -32,7 +32,14 @@ public class PhotonPlayerController : MonoBehaviour
 
         playerRB = GetComponent<Rigidbody>();
 
+        chatRoomCollider = GameObject.Find("chatArea");
+
+
+        //Next is potentially unsafe code
         string nickname = photonView.Owner.NickName;
+        if (!string.IsNullOrEmpty(nickname)){
+            nickname = "bob";
+        }
         string username = nickname.Substring(0, nickname.Length-3);
         string usercolor = nickname.Substring(nickname.Length-3, 3);
 
@@ -46,7 +53,7 @@ public class PhotonPlayerController : MonoBehaviour
 
         setColors(playerColor);
 
-        chatRoomCollider = GameObject.Find("chatArea");
+        
 
         if (photonView.IsMine)
         {
@@ -55,6 +62,8 @@ public class PhotonPlayerController : MonoBehaviour
         } 
 
         playerNameGuiStyle.fontSize = 30;
+
+        
     }
 
     [PunRPC]
@@ -94,7 +103,8 @@ public class PhotonPlayerController : MonoBehaviour
             photonView.RPC("LightOff", RpcTarget.All);
         }
 
-        if (chatRoomCollider.GetComponent<ToggleChatGui>().isChatGuiVisible){
+        
+        if (chatRoomCollider != null && chatRoomCollider.GetComponent<ToggleChatGui>().isChatGuiVisible){
             //ignore player movement if chat window is active
             return;
         }
