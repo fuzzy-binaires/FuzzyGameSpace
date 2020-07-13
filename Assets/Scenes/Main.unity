@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 705507994}
-  m_IndirectSpecularColor: {r: 0.45135593, g: 0.5009364, b: 0.5727935, a: 1}
+  m_IndirectSpecularColor: {r: 0.45135623, g: 0.5009369, b: 0.5727935, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -1664,7 +1664,7 @@ MonoBehaviour:
   m_HandleRect: {fileID: 637486940}
   m_Direction: 2
   m_Value: 0
-  m_Size: 0.999844
+  m_Size: 0.99949056
   m_NumberOfSteps: 0
   m_OnValueChanged:
     m_PersistentCalls:
@@ -2025,7 +2025,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 1}
   m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: 0, y: 0.000070132}
+  m_AnchoredPosition: {x: 0, y: -0.00003332069}
   m_SizeDelta: {x: 0, y: 300}
   m_Pivot: {x: 0, y: 1}
 --- !u!4 &302992531 stripped
@@ -8838,6 +8838,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0e9086e21000000007a086e210000000, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  pinSelectedGizmo: {fileID: 2064452731}
+  pinConnector: {fileID: 7486641182392127530, guid: c2fc99544439740f0bf4eb9fd81ff286,
+    type: 3}
+  pinGui: {fileID: 538280492}
+  pinInputText: {fileID: 0}
+  pinDataEditor:
+    pinDescriptions: []
 --- !u!114 &1604069233
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -10515,7 +10522,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   popUpText: {fileID: 0}
-  popUpCanvasGroup: {fileID: 0}
+  popUpCanvasGroup: {fileID: 1608377158}
   playerIsDeciding: 0
   roomName: THE LIBRARY
   webURLName: antennaRoom
