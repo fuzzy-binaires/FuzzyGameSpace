@@ -22,6 +22,8 @@ public class PhotonPlayerController : MonoBehaviour
     [SerializeField] MeshRenderer LED_LowerNeck;
     [SerializeField] MeshRenderer LED_Truck;
 
+    Color playerColor = Color.red;
+
 
 
     void Start()
@@ -33,14 +35,16 @@ public class PhotonPlayerController : MonoBehaviour
         string nickname = photonView.Owner.NickName;
         string username = nickname.Substring(0, nickname.Length-3);
         string usercolor = nickname.Substring(nickname.Length-3, 3);
+
         Debug.Log("User joined! " + "username: " + username + " usercolor: " + usercolor);
         userName.text = username;
-        Color c = HSBColor.StringToHue(usercolor).ToColor();
-        userName.color = c;
+        gameObject.name = "Player_" + username;
+        
+        playerColor = HSBColor.StringToHue(usercolor).ToColor();
+        userName.color = playerColor;
         userName.UpdateFontAsset();
-        //userName.color = PlayerPrefs.GetString(LogInController.userColor_Pointer);
 
-        setColors(c);
+        setColors(playerColor);
 
         chatRoomCollider = GameObject.Find("chatArea");
 
@@ -53,6 +57,18 @@ public class PhotonPlayerController : MonoBehaviour
         playerNameGuiStyle.fontSize = 30;
     }
 
+    [PunRPC]
+    public void LightOn()
+    {
+        LED_Head.material.SetColor("_EmissionColor", playerColor); 
+    }
+
+    [PunRPC] // make this function shared among networked participants
+    public void LightOff()
+    {
+        LED_Head.material.SetColor("_EmissionColor", Color.black); 
+    }
+
 
     void setColors(Color c) {
         LED_Head.material.color = c;
@@ -62,11 +78,20 @@ public class PhotonPlayerController : MonoBehaviour
     }
     void Update()
     {
-
         if (!photonView.IsMine)
         {
             // this is not my player to move!
             return;
+        }
+
+        if (Input.GetKeyDown(KeyCode.Space))
+        {
+            // turn the light on and tell everyone on the network
+            photonView.RPC("LightOn", RpcTarget.All);
+        } else if (Input.GetKeyUp(KeyCode.Space))
+        {
+            // turn the light off and tell everyone on the network
+            photonView.RPC("LightOff", RpcTarget.All);
         }
 
         if (chatRoomCollider.GetComponent<ToggleChatGui>().isChatGuiVisible){
