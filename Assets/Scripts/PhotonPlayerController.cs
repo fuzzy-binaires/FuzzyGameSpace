@@ -9,6 +9,8 @@ public class PhotonPlayerController : MonoBehaviour
     private float lastPressedTime = 0.0f;
     public static PhotonPlayerController localPlayer;
 
+    public TextMeshPro userName;
+
     GameObject chatRoomCollider = null;
 
     Rigidbody playerRB;
@@ -21,35 +23,18 @@ public class PhotonPlayerController : MonoBehaviour
 
         playerRB = GetComponent<Rigidbody>();
 
-        chatRoomCollider = GameObject.Find("chatArea");
+        userName.text = photonView.Owner.NickName;
 
-       
+        chatRoomCollider = GameObject.Find("chatArea");
 
         if (photonView.IsMine)
         {
             // this is the local player, can't be overwritten.
             localPlayer = this;
-
         } 
 
         playerNameGuiStyle.fontSize = 30;
     }
-
-    /*
-
-     void OnGUI()
-     {
-         Vector3 pos = Camera.main.WorldToScreenPoint(this.transform.position );
-         var rect = new Rect(pos.x-10, pos.y-50, pos.x+500, pos.y+500);
-         
-          string name = photonView.Owner.NickName;
-          if (string.IsNullOrEmpty(name))
-            name = "bob";
-
-          GUI.Label(rect , name, playerNameGuiStyle);
-     }
-
-     */
 
     void Update()
     {

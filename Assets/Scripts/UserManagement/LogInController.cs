@@ -19,6 +19,7 @@ public class LogInController : MonoBehaviour
     [SerializeField] LogInData credentialsEditor;
     [SerializeField] TMP_InputField emailContent;
     [SerializeField] TMP_InputField passwordContent;
+    [SerializeField] TMP_InputField userNameContent;
 
     [SerializeField] string sceneFuzzyHouse;
     [SerializeField] string sceneLogInFailed;
@@ -27,12 +28,15 @@ public class LogInController : MonoBehaviour
     static string credentialsLocalPath() => Application.dataPath + "/Resources/" + "credentials.json";
     static string credentialsServerPath() => serverPath + "credentials.json"; // to put hard coded server path
 
+    public readonly static string userName_Pointer = "userName";
+    public readonly static string email_Pointer = "email";
 
   //  #if UNITY_EDITOR
 
     void Awake()
     {
-        emailContent.text = PlayerPrefs.GetString("email_cookie");
+        emailContent.text = PlayerPrefs.GetString(email_Pointer); // remember email
+        userNameContent.text = PlayerPrefs.GetString(userName_Pointer); // remember username
     }
 
      #if UNITY_EDITOR
@@ -61,6 +65,7 @@ public class LogInController : MonoBehaviour
 
     public void AttemptLogIn()
     {
+        if (emailContent.text == null || userNameContent.text == null || passwordContent.text == null) return; // only allow LogIn when all fields are used
         StartCoroutine(DownloadString(credentialsServerPath(), OnReceivedLogInData));
     }    
 
@@ -71,7 +76,9 @@ public class LogInController : MonoBehaviour
 
         // log-in data fields
         string email = emailContent.text;
-        PlayerPrefs.SetString("email_cookie", email);
+        string userName = userNameContent.text;
+        PlayerPrefs.SetString(email_Pointer, email);
+        PlayerPrefs.SetString(userName_Pointer, userName);
         string password = passwordContent.text;
 
         // we check if login is correct

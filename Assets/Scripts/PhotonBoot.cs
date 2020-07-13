@@ -50,9 +50,10 @@ public class PhotonBoot : MonoBehaviourPunCallbacks
     {
         Debug.Log("Photon: ConnectedToMaster -> " + PhotonNetwork.CloudRegion + ", " + PhotonNetwork.CurrentCluster);
 
-        PhotonNetwork.AuthValues = new AuthenticationValues(PlayerPrefs.GetString("name") + Random.Range(0, 10000000).ToString("D8"));
-        Debug.Log("Player Name: " + PhotonNetwork.AuthValues.UserId);
-        PhotonNetwork.LocalPlayer.NickName = PlayerPrefs.GetString("name");
+        // get username and add a unique random ID 
+        PhotonNetwork.AuthValues = new AuthenticationValues(PlayerPrefs.GetString(LogInController.userName_Pointer) + Random.Range(0, 10000000).ToString("D8"));
+        // make the username = nickname visible to all players
+        PhotonNetwork.LocalPlayer.NickName = PlayerPrefs.GetString(LogInController.userName_Pointer);
 
         PhotonNetwork.JoinLobby();
     }
