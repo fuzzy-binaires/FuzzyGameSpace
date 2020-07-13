@@ -31,6 +31,8 @@ public class PhotonPlayerController : MonoBehaviour
         playerNameGuiStyle.fontSize = 30;
     }
 
+    /*
+
      void OnGUI()
      {
          Vector3 pos = Camera.main.WorldToScreenPoint(this.transform.position );
@@ -42,6 +44,8 @@ public class PhotonPlayerController : MonoBehaviour
 
           GUI.Label(rect , name, playerNameGuiStyle);
      }
+
+     */
 
     void Update()
     {
