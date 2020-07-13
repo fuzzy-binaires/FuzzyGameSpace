@@ -94,6 +94,15 @@ public class PhotonPlayerController : MonoBehaviour
             return;
         }
 
+        //DISABLING DEFAULT MOTION AND LIGHTS UP WHEN INSIDE CHAT OR PIN CONNECTORS
+
+        if (chatRoomCollider != null && chatRoomCollider.GetComponent<ToggleChatGui>().isChatGuiVisible)
+        {
+            //ignore player movement if chat window is active
+            return;
+        }
+
+
         if (Input.GetKeyDown(KeyCode.Space))
         {
             // turn the light on and tell everyone on the network
@@ -105,10 +114,7 @@ public class PhotonPlayerController : MonoBehaviour
         }
 
         
-        if (chatRoomCollider != null && chatRoomCollider.GetComponent<ToggleChatGui>().isChatGuiVisible){
-            //ignore player movement if chat window is active
-            return;
-        }
+
 
         Vector2 moveInput = Vector2.zero;
 

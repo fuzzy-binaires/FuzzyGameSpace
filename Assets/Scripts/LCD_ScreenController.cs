@@ -17,7 +17,7 @@ public class LCD_ScreenController : MonoBehaviour
     public float scrollSpeed = 1.0f;
     private string originalText;
 
-    public float serverReadPeriod = 20.0f; //How often we refresh the string from the server
+    public float serverReadPeriod = 60.0f; //How often we refresh the string from the server
 
     private TMP_Text cloneText;
     private RectTransform textRectTransform;

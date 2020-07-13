@@ -78,6 +78,7 @@ public class PhotonBoot : MonoBehaviourPunCallbacks
 
     public override void OnJoinedRoom()
     {
+
         Debug.Log("Photon: OnJoinedRoom -> " + PhotonNetwork.CurrentRoom);
 
         if (connectedToRoom)
@@ -100,7 +101,10 @@ public class PhotonBoot : MonoBehaviourPunCallbacks
 
         player.gameObject.tag = "Player";
 
-        pinController?.initializePinState();
+        Debug.Log("---------- Avant JSON");
+        Debug.Log("PinContr NULL? " + pinController == null);
+        pinController.initFromJson();
+        Debug.Log("---------- Apres JSON");
 
         connectedToRoom = true;
 

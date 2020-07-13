@@ -5,6 +5,8 @@ using SimpleJSON;
 using TMPro;
 using NaughtyAttributes;
 using System.IO;
+using UnityEngine.Networking;
+using System;
 
 public class PinController : MonoBehaviour
 {
@@ -21,9 +23,9 @@ public class PinController : MonoBehaviour
     private bool chooseServerPath = true;
     // DATABASE STUFF
     [SerializeField] PinData pinDataEditor;
-    static readonly string serverPath = "http://134.122.74.56/space/appdata/"; // use path to save data on virtual machine
+    static string serverPath() => "http://134.122.74.56/space/appdata/pinDatabase.json";
     static string credentialsLocalPath() => Application.dataPath + "/Resources/" + "pinDatabase.json";
-    static string credentialsServerPath() => serverPath + "pinDatabase.json"; // to put hard coded server path
+    //static string credentialsServerPath() => serverPath + "pinDatabase.json"; // to put hard coded server path
 
 
 
@@ -143,20 +145,20 @@ public class PinController : MonoBehaviour
         }
     }
 
-    public void initializePinState()
+    public void initializePinState(PinData pinData)
     {
 
         // I do this here because the pinsConnectors is a Photon shared object (everyone can see realtime if somebody post),
         // But it cannot be initialize before any Player enters a room. Thus I call it from PhotonBoot when PlayerEnters
         //Debug.Log(Database.getPinData(0));
 
-        PinData pinDataInDB = readPinDataFromFile();
+        pinData = readPinDataFromFile();
 
         for (int i = 0; i < transform.childCount; i++)
         {
 
             //JSONNode pinData = PinDatabase.getPinData(i);
-            string description = pinDataInDB.pinDescriptions[i].text;
+            string description = pinData.pinDescriptions[i].text;
 
             Pin pin = transform.GetChild(i).gameObject.GetComponent<Pin>();
 
@@ -165,9 +167,15 @@ public class PinController : MonoBehaviour
                 //pin.setIsEmpty(false);
                 StartCoroutine(setPinIsEmptyWithDelay(i / 20.0f, pin, false));
 
+
             }
+
+
+            Debug.Log("Pin : " + i + !description.Equals("empty"));
         }
     }
+
+
 
     IEnumerator setPinIsEmptyWithDelay(float time, Pin pin, bool state)
     {
@@ -175,7 +183,10 @@ public class PinController : MonoBehaviour
 
         pin.setIsEmpty(state);
 
+
     }
+
+
 
 
 
@@ -253,7 +264,7 @@ public class PinController : MonoBehaviour
 
 
         string json = JsonUtility.ToJson(pinDataEditor);
-        StreamWriter writer = new StreamWriter(chooseServerPath ? credentialsServerPath() : credentialsLocalPath());
+        StreamWriter writer = new StreamWriter(chooseServerPath ? serverPath() : credentialsLocalPath());
         writer.WriteLine(json);
         writer.Close();
         //AssetDatabase.ImportAsset(credentialsLocalPath());
@@ -262,12 +273,66 @@ public class PinController : MonoBehaviour
     [Button]
     private PinData readPinDataFromFile()
     {
-        StreamReader reader = new StreamReader(chooseServerPath ? credentialsServerPath() : credentialsLocalPath());
+        StreamReader reader = new StreamReader(chooseServerPath ? serverPath() : credentialsLocalPath());
         string json = reader.ReadToEnd();
         reader.Close();
         //Debug.Log("json: " + json);
         return JsonUtility.FromJson<PinData>(json);
 
+    }
+
+
+    public void initFromJson()
+    {
+        RequestJsonFromServer();
+
+    }
+
+    void RequestJsonFromServer()
+    {
+        StartCoroutine(DownloadString(serverPath(), OnReceivedPinData));
+    }
+
+    void OnReceivedPinData(string json)
+    {
+        Debug.Log(json);
+
+        PinData data = JsonUtility.FromJson<PinData>(json);
+        Debug.Log(data);
+        initializePinState(data);
+
+
+
+        //LCDText.text = data.text;
+
+
+    }
+
+    IEnumerator DownloadString(string uri, Action<string> callback)
+    {
+        Debug.Log(" begin DE Doewnload String");
+
+        using (UnityWebRequest webRequest = UnityWebRequest.Get(uri))
+        {
+            // request and wait for page
+            yield return webRequest.SendWebRequest();
+
+            string[] pages = uri.Split('/');
+            int page = pages.Length - 1;
+
+            if (webRequest.isNetworkError)
+            {
+                Debug.LogError(pages[page] + ": Error: " + webRequest.error);
+            }
+            else
+            {
+                Debug.Log(" FINAL DE Doewnload String");
+
+                callback(webRequest.downloadHandler.text);
+                PinData data = JsonUtility.FromJson<PinData>(webRequest.downloadHandler.text);
+
+            }
+        }
     }
 
 }

@@ -1664,7 +1664,7 @@ MonoBehaviour:
   m_HandleRect: {fileID: 637486940}
   m_Direction: 2
   m_Value: 0
-  m_Size: 0.99949056
+  m_Size: 0.99921155
   m_NumberOfSteps: 0
   m_OnValueChanged:
     m_PersistentCalls:
@@ -2025,7 +2025,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 1}
   m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: 0, y: -0.00003332069}
+  m_AnchoredPosition: {x: 0, y: 0.000045770335}
   m_SizeDelta: {x: 0, y: 300}
   m_Pivot: {x: 0, y: 1}
 --- !u!4 &302992531 stripped
@@ -5462,7 +5462,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 67bf0d5ae89bc4e298be9db348bb3d24, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  pinController: {fileID: 0}
+  pinController: {fileID: 1604069232}
   roomName: FuzzyGameSpace
   isOffline: 0
 --- !u!4 &887230365
