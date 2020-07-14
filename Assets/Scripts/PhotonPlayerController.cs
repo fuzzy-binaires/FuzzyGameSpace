@@ -30,17 +30,32 @@ public class PhotonPlayerController : MonoBehaviour
     {
         photonView = GetComponent<PhotonView>();
 
+        if (photonView == null){
+            Debug.LogError("PhotonPlayerController::Start photonView is null!!!");
+        }
+
+        
+
         playerRB = GetComponent<Rigidbody>();
 
         chatRoomCollider = GameObject.Find("chatArea");
 
 
         //Next is potentially unsafe code
-        string nickname = photonView.Owner.NickName;
-        if (!string.IsNullOrEmpty(nickname) || (nickname.Length-3) <= 0){
-            Debug.Log("Username " + nickname + " is too short");
-            nickname = "Anonymous_user111";
+        string nickname = "Anonymous_user111";
+        if (photonView.Owner == null || photonView.Owner.NickName == null){
+            Debug.LogError("PhotonPlayerController::Start photonView.Owner is null!!!");
+        } else {
+            
+            if (string.IsNullOrEmpty(photonView.Owner.NickName) || (photonView.Owner.NickName.Length-3) <= 0){
+                Debug.Log("Username " + photonView.Owner.NickName + " is too short");
+             
+            } else {
+                nickname = photonView.Owner.NickName;
+            }
         }
+        
+         
         string username = nickname.Substring(0, nickname.Length-3);
         string usercolor = nickname.Substring(nickname.Length-3, 3);
 
