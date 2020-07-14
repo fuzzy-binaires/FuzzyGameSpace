@@ -13,7 +13,7 @@ using UnityEngine.Networking;
 public class LCD_ScreenController : MonoBehaviour
 {
 
-    public TMP_Text LCDText;
+    private TMP_Text LCDText;
     public float scrollSpeed = 1.0f;
     private string originalText;
 

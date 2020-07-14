@@ -101,8 +101,12 @@ public class PhotonBoot : MonoBehaviourPunCallbacks
 
         player.gameObject.tag = "Player";
 
-        //Debug.Log("PinContr NULL? " + pinController == null);
-        pinController.initFromJson();
+        if (pinController == null){
+            Debug.LogError("Connect the pin controller from the GUI");
+        } else {
+            pinController.initFromJson();
+        }
+        
 
 
         connectedToRoom = true;
