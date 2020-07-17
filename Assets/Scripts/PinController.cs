@@ -99,7 +99,6 @@ public class PinController : MonoBehaviour
                     userTyping = false;
                     pinGui.SetActive(false);
 
-                    // TODO AND SAVE THE DATA
                     pin.setDescription(pinInputText.text);
 
                     savePinDataToFile();
@@ -331,5 +330,7 @@ public class PinController : MonoBehaviour
             }
         }
     }
+
+    public bool isUserTyping() { return userTyping; }
 
 }

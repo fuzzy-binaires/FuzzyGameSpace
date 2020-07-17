@@ -24,6 +24,7 @@ public class PhotonPlayerController : MonoBehaviour
 
     Color playerColor = Color.red;
 
+    PinController pinController;
 
 
     void Start()
@@ -39,6 +40,8 @@ public class PhotonPlayerController : MonoBehaviour
         playerRB = GetComponent<Rigidbody>();
 
         chatRoomCollider = GameObject.Find("chatArea");
+        pinController = GameObject.Find("colliders/pins").GetComponent<PinController>();
+        //Debug.Log("--------|| Found Pin Controller: " + pinController);
 
 
         //Next is potentially unsafe code
@@ -129,6 +132,8 @@ public class PhotonPlayerController : MonoBehaviour
             //ignore player movement if chat window is active
             return;
         }
+
+        if (pinController.isUserTyping()) return;
 
 
         if (Input.GetKeyDown(KeyCode.Space))

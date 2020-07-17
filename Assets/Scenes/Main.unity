@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 705507994}
-  m_IndirectSpecularColor: {r: 0.45135593, g: 0.5009364, b: 0.5727935, a: 1}
+  m_IndirectSpecularColor: {r: 0.45135623, g: 0.5009369, b: 0.5727935, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -1664,7 +1664,7 @@ MonoBehaviour:
   m_HandleRect: {fileID: 637486940}
   m_Direction: 2
   m_Value: 0
-  m_Size: 0.9976639
+  m_Size: 1
   m_NumberOfSteps: 0
   m_OnValueChanged:
     m_PersistentCalls:
@@ -2025,7 +2025,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 1}
   m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: 0, y: 0.000045420024}
+  m_AnchoredPosition: {x: 0, y: -0.000028371811}
   m_SizeDelta: {x: 0, y: 300}
   m_Pivot: {x: 0, y: 1}
 --- !u!4 &302992531 stripped
@@ -3641,13 +3641,13 @@ MonoBehaviour:
   m_margin: {x: 0, y: 0, z: 0, w: 0}
   m_textInfo:
     textComponent: {fileID: 637221988}
-    characterCount: 0
+    characterCount: 60
     spriteCount: 0
-    spaceCount: 0
-    wordCount: 0
+    spaceCount: 10
+    wordCount: 11
     linkCount: 0
-    lineCount: 0
-    pageCount: 0
+    lineCount: 1
+    pageCount: 1
     materialCount: 1
   m_isUsingLegacyAnimationComponent: 0
   m_isVolumetricText: 0
@@ -5462,7 +5462,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 67bf0d5ae89bc4e298be9db348bb3d24, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  pinController: {fileID: 0}
+  pinController: {fileID: 1604069233}
   roomName: FuzzyGameSpace
   isOffline: 0
 --- !u!4 &887230365
@@ -8687,6 +8687,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1604069231}
   - component: {fileID: 1604069232}
+  - component: {fileID: 1604069233}
   m_Layer: 0
   m_Name: pins
   m_TagString: Pins
@@ -8834,6 +8835,18 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 0e8e62b210000000079e62b210000000, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!114 &1604069233
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1604069230}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0e9086e21000000007a086e210000000, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   pinSelectedGizmo: {fileID: 2064452731}
