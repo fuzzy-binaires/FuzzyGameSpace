@@ -24,7 +24,7 @@ public class PinController : MonoBehaviour
     // DATABASE STUFF
     [SerializeField] PinData pinDataEditor;
     static string serverPath() => "http://134.122.74.56/space/appdata/pinDatabase.json";
-    static string credentialsLocalPath() => Application.dataPath + "/Resources/" + "pinDatabase.json";
+    //static string credentialsLocalPath() => Application.dataPath + "/Resources/" + "pinDatabase.json";
     //static string credentialsServerPath() => serverPath + "pinDatabase.json"; // to put hard coded server path
 
 
@@ -73,7 +73,7 @@ public class PinController : MonoBehaviour
                     if (pin.getIsEmpty())
                     {
                         // LAUNCH HTML INTERFACE FOR => ADDING A RESOURCE
-                        Debug.Log("-|| USER WANTS TO ADD TO PIN " + selectedPin);
+                        //Debug.Log("-|| USER WANTS TO ADD TO PIN " + selectedPin);
                         userTyping = true;
                         pinInputText.text = "[ENTER to Save]";
 
@@ -160,8 +160,9 @@ public class PinController : MonoBehaviour
             string description = pinData.pinDescriptions[i].text;
 
             Pin pin = transform.GetChild(i).gameObject.GetComponent<Pin>();
+            pin.setDescription(description);
 
-            if (!description.Equals("empty"))
+            if (!pin.getDescription().Equals("empty"))
             {
                 //pin.setIsEmpty(false);
                 StartCoroutine(setPinIsEmptyWithDelay(i / 20.0f, pin, false));
@@ -170,7 +171,7 @@ public class PinController : MonoBehaviour
             }
 
 
-            Debug.Log("Pin : " + i + !description.Equals("empty"));
+            //Debug.Log("Pin : " + i + !description.Equals("empty"));
         }
     }
 
@@ -253,14 +254,19 @@ public class PinController : MonoBehaviour
 
         // ASSEMBLE PIN DATA INTO ARRAY
         //string[]  escriptions = new string[transform.childCount];
-        for(int i=0; i< transform.childCount; i++)
-        {
+
+        Debug.Log("--|| Starting Saving Process:");
+
+        for (int i=0; i< transform.childCount; i++)
+        { 
             pinDataEditor.pinDescriptions[i].text = getPinById(i).gameObject.GetComponent<Pin>().getDescription();
+            Debug.Log("--|| Pin " + i + ": " + pinDataEditor.pinDescriptions[i].text);
         }
 
 
         // TO FILE
         string json = JsonUtility.ToJson(pinDataEditor);
+        Debug.Log(json);
 
         StartCoroutine(UploadData(json));
 
@@ -272,16 +278,16 @@ public class PinController : MonoBehaviour
         //AssetDatabase.ImportAsset(credentialsLocalPath());
     }
 
-    [Button]
-    private PinData readPinDataFromFile()
-    {
-        StreamReader reader = new StreamReader(chooseServerPath ? serverPath() : credentialsLocalPath());
-        string json = reader.ReadToEnd();
-        reader.Close();
-        //Debug.Log("json: " + json);
-        return JsonUtility.FromJson<PinData>(json);
+    //[Button]
+    //private PinData readPinDataFromFile()
+    //{
+    //    StreamReader reader = new StreamReader(chooseServerPath ? serverPath() : credentialsLocalPath());
+    //    string json = reader.ReadToEnd();
+    //    reader.Close();
+    //    //Debug.Log("json: " + json);
+    //    return JsonUtility.FromJson<PinData>(json);
 
-    }
+    //}
 
 
     public void initFromJson()
@@ -297,11 +303,14 @@ public class PinController : MonoBehaviour
 
     void OnReceivedPinData(string json)
     {
-        //Debug.Log(json);
+        Debug.Log("--|| RECIEVING RAW JSON");
+        Debug.Log(json);
 
-        PinData data = JsonUtility.FromJson<PinData>(json);
-        //Debug.Log(data);
-        initializePinState(data);
+        pinDataEditor = JsonUtility.FromJson<PinData>(json);
+
+        Debug.Log("--|| AFTER SAVING IN PinData OBJECT");
+        Debug.Log( JsonUtility.ToJson(pinDataEditor));
+        initializePinState(pinDataEditor);
 
 
 
@@ -328,7 +337,17 @@ public class PinController : MonoBehaviour
             else
             {
                 callback(webRequest.downloadHandler.text);
-                PinData data = JsonUtility.FromJson<PinData>(webRequest.downloadHandler.text);
+                //PinData data = JsonUtility.FromJson<PinData>(webRequest.downloadHandler.text);
+                pinDataEditor = JsonUtility.FromJson<PinData>(webRequest.downloadHandler.text);
+                Debug.Log(JsonUtility.ToJson(pinDataEditor));
+
+
+                for (int i=0; i < transform.childCount; i++)
+                {
+                    Pin pin = getPinById(i).GetComponent<Pin>();
+                    pin.setDescription(pinDataEditor.pinDescriptions[i].text);
+
+                }
 
             }
         }
@@ -337,11 +356,12 @@ public class PinController : MonoBehaviour
     IEnumerator UploadData(string jsonString)
     {
         Debug.Log("----||| TRYING TO UPLOAD DATA ");
+        Debug.Log(jsonString);
 
         WWWForm form = new WWWForm();
         form.AddField("fieldWithJsonString", jsonString);
 
-        using (UnityWebRequest www = UnityWebRequest.Post("http://134.122.74.56/borders_flask_server/pinData_to_server", form))
+        using (UnityWebRequest www = UnityWebRequest.Post("http://134.122.74.56/borders_flask_server/pindata_to_server", form))
         {
             yield return www.SendWebRequest();
 
