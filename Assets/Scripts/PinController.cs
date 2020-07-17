@@ -260,12 +260,15 @@ public class PinController : MonoBehaviour
 
 
         // TO FILE
-
-
         string json = JsonUtility.ToJson(pinDataEditor);
-        StreamWriter writer = new StreamWriter(chooseServerPath ? serverPath() : credentialsLocalPath());
-        writer.WriteLine(json);
-        writer.Close();
+
+        StartCoroutine(UploadData(json));
+
+
+        //string json = JsonUtility.ToJson(pinDataEditor);
+        //StreamWriter writer = new StreamWriter(chooseServerPath ? serverPath() : credentialsLocalPath());
+        //writer.WriteLine(json);
+        //writer.Close();
         //AssetDatabase.ImportAsset(credentialsLocalPath());
     }
 
@@ -297,7 +300,7 @@ public class PinController : MonoBehaviour
         //Debug.Log(json);
 
         PinData data = JsonUtility.FromJson<PinData>(json);
-        Debug.Log(data);
+        //Debug.Log(data);
         initializePinState(data);
 
 
@@ -327,6 +330,28 @@ public class PinController : MonoBehaviour
                 callback(webRequest.downloadHandler.text);
                 PinData data = JsonUtility.FromJson<PinData>(webRequest.downloadHandler.text);
 
+            }
+        }
+    }
+
+    IEnumerator UploadData(string jsonString)
+    {
+        Debug.Log("----||| TRYING TO UPLOAD DATA ");
+
+        WWWForm form = new WWWForm();
+        form.AddField("fieldWithJsonString", jsonString);
+
+        using (UnityWebRequest www = UnityWebRequest.Post("http://134.122.74.56/borders_flask_server/pinData_to_server", form))
+        {
+            yield return www.SendWebRequest();
+
+            if (www.isNetworkError || www.isHttpError)
+            {
+                Debug.Log(www.error);
+            }
+            else
+            {
+                Debug.Log("Form upload complete!");
             }
         }
     }
