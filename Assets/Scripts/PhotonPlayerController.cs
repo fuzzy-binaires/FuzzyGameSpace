@@ -15,8 +15,6 @@ public class PhotonPlayerController : MonoBehaviour
 
     Rigidbody playerRB;
 
-    private GUIStyle playerNameGuiStyle = new GUIStyle(); 
-
     [SerializeField] MeshRenderer LED_Head_Capsule;
     [SerializeField] MeshRenderer LED_Neck;
     [SerializeField] MeshRenderer LED_LowerNeck;
@@ -44,8 +42,8 @@ public class PhotonPlayerController : MonoBehaviour
         //Debug.Log("--------|| Found Pin Controller: " + pinController);
 
 
-        //Next is potentially unsafe code
-        string nickname = "Anonymous_user111";
+        // test code: Make it possible to test Main without login
+        string nickname = "test_user";
         if (photonView.Owner == null || photonView.Owner.NickName == null){
             Debug.LogError("PhotonPlayerController::Start photonView.Owner is null!!!");
         } else {
@@ -57,6 +55,7 @@ public class PhotonPlayerController : MonoBehaviour
                 nickname = photonView.Owner.NickName;
             }
         }
+        // -- end test code snippet --
         
          
         string username = nickname.Substring(0, nickname.Length-3);
@@ -79,34 +78,17 @@ public class PhotonPlayerController : MonoBehaviour
             // this is the local player, can't be overwritten.
             localPlayer = this;
         } 
-
-        playerNameGuiStyle.fontSize = 30;
-        LED_Head_Capsule.GetComponent<Light>().color = playerColor;
-
-        
     }
 
     [PunRPC]
     public void LightOn()
     {
-        LED_Head_Capsule.GetComponent<Light>().intensity = 5;
-        
-        if (!LED_Head_Capsule.material.IsKeywordEnabled("_EmissionColor")){
-            Debug.Log("This is not a material property");
-        } else {
-
-        }
-        Color colour = LED_Head_Capsule.material.GetColor("_EmissionColor");
-        colour *= 4.0f; //  4X brighter
-        LED_Head_Capsule.material.SetColor("_EmissionColor", colour);
-
-        //LED_Head_Capsule.material.SetColor("_EmissionColor", playerColor); 
+        LED_Head_Capsule.material.SetColor("_EmissionColor", Color.Lerp(Color.white, playerColor, 0.5f)); 
     }
 
     [PunRPC] // make this function shared among networked participants
     public void LightOff()
     {
-        LED_Head_Capsule.GetComponent<Light>().intensity = 0;
         LED_Head_Capsule.material.SetColor("_EmissionColor", Color.black); 
     }
 
@@ -133,7 +115,7 @@ public class PhotonPlayerController : MonoBehaviour
             return;
         }
 
-        if (pinController.isUserTyping()) return;
+     //   if (pinController.isUserTyping()) return;
 
 
         if (Input.GetKeyDown(KeyCode.Space))
