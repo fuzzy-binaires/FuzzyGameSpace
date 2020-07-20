@@ -13,13 +13,8 @@ public class PhotonBoot : MonoBehaviourPunCallbacks
     public static PhotonBoot Instance;
     public static PUN2_Chat chat;
 
-    public PinController pinController;
-
-    [SerializeField] Photon.Realtime.TypedLobby lobby = Photon.Realtime.TypedLobby.Default;
     [SerializeField] string roomName = "FuzzyGameSpace";
-    [SerializeField] bool isOffline = false;
-    //[SerializeField] string connectToScene = "";
-
+  
     bool connectedToRoom = false;
 
     // Start is called before the first frame update
@@ -31,20 +26,9 @@ public class PhotonBoot : MonoBehaviourPunCallbacks
 
     public void Connect()
     {
-        PhotonNetwork.OfflineMode = isOffline;
-
         PhotonNetwork.ConnectUsingSettings();
     }
 
-    public void Reconnect(bool isOffline)
-    {
-        PhotonNetwork.Disconnect();
-
-        this.isOffline = isOffline;
-        connectedToRoom = false;
-
-        PhotonNetwork.ConnectUsingSettings();
-    }
 
     public override void OnConnectedToMaster()
     {
@@ -87,27 +71,10 @@ public class PhotonBoot : MonoBehaviourPunCallbacks
             return;
         }
 
-        // settings for networked objects such as player, pins 
+        // settings for networked objects such as player
         GameObject player;
-
-        if (!isOffline)
-        {
-            player = PhotonNetwork.Instantiate("Player/Player_LED", new Vector3(0f, 0f, 0f), Quaternion.identity, 0);
-        }
-        else
-        {
-            player = PhotonNetwork.Instantiate("Player/Player_LED", new Vector3(0f, 0f, 0f), Quaternion.identity, 0);
-        }
-
+        player = PhotonNetwork.Instantiate("Player/Player_LED", new Vector3(0f, 0f, 0f), Quaternion.identity, 0);
         player.gameObject.tag = "Player";
-
-        if (pinController == null){
-            Debug.LogError("Connect the pin controller from the GUI");
-        } else {
-            pinController.initFromJson();
-        }
-        
-
 
         connectedToRoom = true;
 
