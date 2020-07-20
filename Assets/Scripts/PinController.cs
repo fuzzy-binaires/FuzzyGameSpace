@@ -23,7 +23,7 @@ public class PinController : MonoBehaviour
     private bool chooseServerPath = true;
     // DATABASE STUFF
     [SerializeField] PinData pinDataEditor;
-    static string serverPath() => "http://134.122.74.56/space/appdata/pinDatabase.json";
+    static string serverPath() => "http://fuzzy-binaires.org/space/appdata/pinDatabase.json";
     //static string credentialsLocalPath() => Application.dataPath + "/Resources/" + "pinDatabase.json";
     //static string credentialsServerPath() => serverPath + "pinDatabase.json"; // to put hard coded server path
 
@@ -361,7 +361,7 @@ public class PinController : MonoBehaviour
         WWWForm form = new WWWForm();
         form.AddField("fieldWithJsonString", jsonString);
 
-        using (UnityWebRequest www = UnityWebRequest.Post("http://134.122.74.56/borders_flask_server/pindata_to_server", form))
+        using (UnityWebRequest www = UnityWebRequest.Post("http://fuzzy-binaires.org/borders_flask_server/pindata_to_server", form))
         {
             yield return www.SendWebRequest();
 

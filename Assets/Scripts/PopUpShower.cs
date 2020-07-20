@@ -26,7 +26,7 @@ public class PopUpShower : MonoBehaviour
         popUpText = popUpTextGO.GetComponent<TMP_Text>();
         popUpText.text = "";
 
-        webURLName = "http://134.122.74.56/" + webURLName;
+        webURLName = "http://fuzzy-binaires.org/" + webURLName;
         Debug.Log(webURLName);
 
         playerIsDeciding = false;
