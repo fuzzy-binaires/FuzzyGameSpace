@@ -44,6 +44,13 @@ public class PinController : SingletonMonoBehaviour<PinController>
 
     #region Startup
 
+  
+    void Awake()
+    {
+        // do not show GUI when game starts
+        pinGui.SetActive(false);
+    }
+
     public void Setup()
     {
         // loads all local pins in the Scene
@@ -63,6 +70,7 @@ public class PinController : SingletonMonoBehaviour<PinController>
 
         for (int i = 0; i < localPinSlots.Length; i++)
         {
+            if (localPinSlots[i] == AllPinsContainer) { continue; }
             Pin pin = new Pin(localPinSlots[i].gameObject.name, "", localPinSlots[i].gameObject, null);
             AllPins.Add(pin);
         }
