@@ -10,7 +10,7 @@ public class FindSaveFilesOnServer : MonoBehaviour
     {
         textField = GetComponentInChildren<TextMeshProUGUI>();
         //textField.text = "Hello Darkness my old friend";
-        textField.text = Application.dataPath;
+        textField.text = LogInController.credentialsServerPath();
     }
 
     // Update is called once per frame

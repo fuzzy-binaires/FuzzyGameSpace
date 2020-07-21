@@ -30,7 +30,7 @@ public class LogInController : MonoBehaviour
 
     static readonly string serverPath = "http://fuzzy-binaires.org/space/appdata/"; // use path to save data on virtual machine
     static string credentialsLocalPath() => Application.dataPath + "/Resources/" + "credentials.json";
-    static string credentialsServerPath() => serverPath + "credentials.json"; // to put hard coded server path
+    public static string credentialsServerPath() => serverPath + "credentials.json"; // to put hard coded server path
 
     public readonly static string userName_Pointer = "userName";
     public readonly static string email_Pointer = "email";
@@ -110,6 +110,7 @@ public class LogInController : MonoBehaviour
 
     IEnumerator DownloadString(string uri, Action<string> callback)
     {
+        Debug.Log ("our uri is: " + uri);
         using (UnityWebRequest webRequest = UnityWebRequest.Get(uri))
         {
             // request and wait for page
@@ -125,7 +126,7 @@ public class LogInController : MonoBehaviour
             else
             {
                 callback(webRequest.downloadHandler.text);
-                //Debug.Log(pages[page] + ":\nReceived: " + webRequest.downloadHandler.text);
+                Debug.Log(pages[page] + ":\nReceived: " + webRequest.downloadHandler.text);
             }
         }
     }

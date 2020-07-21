@@ -37,8 +37,8 @@ public class PinController : SingletonMonoBehaviour<PinController>
     [SerializeField] PinData pinDataEditor;
     [SerializeField] GameObject pinContentPrefab;
     //static string serverPath() => "http://134.122.74.56/space/appdata/pinDatabase.json";
-    static string serverPath() => "http://134.122.74.56/borders_flask_server/pindata_to_server";
-    static string uploadPath() => "http://134.122.74.56/borders_flask_server/pindata_to_server";
+    static string serverPath() => "http://fuzzy-binaires.org/borders_flask_server/pindata_to_server";
+    static string uploadPath() => "http://fuzzy-binaires.org/borders_flask_server/pindata_to_server";
 
 
 
