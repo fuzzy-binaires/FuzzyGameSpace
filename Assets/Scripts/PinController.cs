@@ -49,10 +49,14 @@ public class PinController : SingletonMonoBehaviour<PinController>
     {
         // do not show GUI when game starts
         pinGui.SetActive(false);
+
+        // reset the GUI lightning bolt outside of the player view
+        updatePinSelection(null);
     }
 
-    public void Setup()
+    public void Setup(string username)
     {
+        Debug.Log("--- Setup the pinController for: " + username);
         // loads all local pins in the Scene
         loadPins();
 
@@ -171,6 +175,21 @@ public class PinController : SingletonMonoBehaviour<PinController>
     {
         if (pin == null) return;
 
+        // when entering the room, instantiate the connectors from the database
+        GameObject connector = Instantiate(Resources.Load<GameObject>("Board/PinContent"), pin.pinGO.transform.position, Quaternion.identity);
+        pin.pinConnector = connector; // put the pinConnector on the pin
+        pin.Text = text; // put the text on the pin
+
+        FlyDown flyDown = connector.GetComponentInChildren<FlyDown>();
+        if (flyDown != null) flyDown.Setup(delay);
+
+        pin.pinConnector = connector;
+    }
+
+    public void createRuntimePinContent(Pin pin, string text, float delay) {
+         if (pin == null) return;
+
+        // when changing a pin at runtime, instantiate its connector on the network
         GameObject connector = PhotonNetwork.Instantiate("Board/PinContent", pin.pinGO.transform.position, Quaternion.identity, 0);
         pin.pinConnector = connector; // put the pinConnector on the pin
         pin.Text = text; // put the text on the pin
@@ -206,11 +225,6 @@ public class PinController : SingletonMonoBehaviour<PinController>
 
             // if there is a Pin nearby, show the text field
             pinGui.SetActive(selectedPin == null ? false : true); // set the text field active or not
-        }
-
-        if (Input.GetKeyUp(KeyCode.P))
-        {
-            //createRuntimePinContent(selectedPin);
         }
 
         // ---- USER ACTS AGAINST A PIN - BEGIN
@@ -290,19 +304,29 @@ public class PinController : SingletonMonoBehaviour<PinController>
     // share updates Pin info on the network at runtime
     public void UpdatedPinDescription(string pinName, string text)
     {
+        Debug.Log("UpdatedPinDescription is: " + "pinName: " + pinName + " text: " + text);
+
         // local database
         PinData.PinDescription pinDes = pinDataEditor.GetPinDescription(pinName);
         if (pinDes != null)
         {
             pinDes.text = text;
+            Debug.Log("PinDescription found, new text is: " + pinDes.text);
         }
 
         // local pin GameObject
         for (int i = 0; i < AllPins.Count; i++)
         {
-            if (AllPins[i].PinName == pinName && AllPins[i].pinConnector == null)
+            if (AllPins[i].PinName == pinName)
             {
-                createStartupPinContent(AllPins[i], text, 0f);
+                if (AllPins[i].pinConnector == null)
+                {
+                    createRuntimePinContent(AllPins[i], text, 0f);
+                }
+                
+                AllPins[i].Text = text;
+
+                return;
             }
         }
     }

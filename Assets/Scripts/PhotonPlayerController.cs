@@ -86,7 +86,7 @@ public class PhotonPlayerController : MonoBehaviour
 
         if (photonView.IsMine)
         {
-            PinController.Instance.Setup();
+            PinController.Instance.Setup(username);
         }
     }
 
