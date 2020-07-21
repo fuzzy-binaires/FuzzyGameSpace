@@ -189,7 +189,7 @@ public class PhotonPlayerController : MonoBehaviour
     [PunRPC] // share updates Pin info on the network at runtime
     public void UpdatedPinDescription(string pinName, string text)
     {
-        Debug.Log("Somebody changed a Pin: " + pinName + ", " + text);
+        //Debug.Log("Somebody changed a Pin: " + pinName + ", " + text);
 
         PinController.Instance.UpdatedPinDescription(pinName, text);
     }
