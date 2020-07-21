@@ -28,7 +28,7 @@ public class LogInController : MonoBehaviour
     [SerializeField] string sceneFuzzyHouse;
     [SerializeField] string sceneLogInFailed;
 
-    static readonly string serverPath = "http://134.122.74.56/space/appdata/"; // use path to save data on virtual machine
+    static readonly string serverPath = "http://fuzzy-binaires.org/space/appdata/"; // use path to save data on virtual machine
     static string credentialsLocalPath() => Application.dataPath + "/Resources/" + "credentials.json";
     static string credentialsServerPath() => serverPath + "credentials.json"; // to put hard coded server path
 

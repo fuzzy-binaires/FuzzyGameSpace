@@ -35,7 +35,7 @@ public class LCD_ScreenController : MonoBehaviour
     }
 
 
-    static string serverPath() =>  "http://134.122.74.56/space/appdata/lcdDatabase.json"; 
+    static string serverPath() =>  "http://fuzzy-binaires.org/space/appdata/lcdDatabase.json"; 
 
 
     void Start()
