@@ -1,17 +1,15 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using SimpleJSON;
 using TMPro;
 using NaughtyAttributes;
-using System.IO;
 using UnityEngine.Networking;
 using System;
 using Photon.Pun;
 
 public class PinController : SingletonMonoBehaviour<PinController>
 {
-    private List<Pin> allPins;
+    private List<Pin> allPins; // hold references to ALL THE PINS
     private List<Pin> AllPins
     {
         get
@@ -21,7 +19,7 @@ public class PinController : SingletonMonoBehaviour<PinController>
 
             return allPins;
         }
-    } // hold references to ALL THE PINS
+    } 
     Pin selectedPin = null;
 
     public Transform AllPinsContainer; // contain the references to all the pins in the editor
@@ -181,7 +179,7 @@ public class PinController : SingletonMonoBehaviour<PinController>
 
     void Update()
     {
-        if (pinInputText.isFocused) PhotonPlayerController.UIIsInFocus = true;
+        if (pinInputText.isFocused) PhotonPlayerController.SetUIInFocusLastFrame();
 
         // figure out which pin is the closest in minimum range to the Player (without colliders)
         Pin closestPin = getClosestPin();

@@ -5,10 +5,7 @@ using Photon.Pun;
 using TMPro;
 public class PhotonPlayerController : MonoBehaviour
 {
-    public static bool UIIsInFocus;
-
     private PhotonView photonView;
-    private float lastPressedTime = 0.0f;
     public static PhotonPlayerController localPlayer;
 
     public TextMeshPro userName;
@@ -24,6 +21,7 @@ public class PhotonPlayerController : MonoBehaviour
 
     Color playerColor = Color.red;
 
+    private static int UIInFocusLastFrame;
 
 
     void Start()
@@ -130,8 +128,8 @@ public class PhotonPlayerController : MonoBehaviour
 
 
         
-        // we prevent movement while a UI element is in focus (hopefully Update order is good)
-        if (!UIIsInFocus)
+        // we prevent movement while a UI element is in focus – we can move only one frame after the UI usage
+        if (Time.frameCount > UIInFocusLastFrame)
         {
             Vector2 moveInput = Vector2.zero;
 
@@ -183,9 +181,8 @@ public class PhotonPlayerController : MonoBehaviour
         }
     }
 
-    void LateUpdate()
-    {
-        UIIsInFocus = false;
+    public static void SetUIInFocusLastFrame() {
+        UIInFocusLastFrame = Time.frameCount; // set current frameCount as last frame when UI is in focus
     }
 
 
