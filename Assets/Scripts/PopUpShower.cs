@@ -18,6 +18,9 @@ public class PopUpShower : MonoBehaviour
     public string roomName;
     public string webURLName;
 
+    public AudioClip playerPrompt;
+    public AudioClip playerEnter;
+
     void Start()
     {
 
@@ -43,6 +46,8 @@ public class PopUpShower : MonoBehaviour
                 // OPEN ROOM'S WEBPAGE
                 //Debug.Log("Open WebPage for Room" + roomName);
 
+                GetComponent<AudioSource>().PlayOneShot(playerEnter);
+
                 OpenBrowserTabJS(webURLName);
                 playerIsDeciding = false;
                 popUpText.text = "";
@@ -62,6 +67,8 @@ public class PopUpShower : MonoBehaviour
             playerIsDeciding = true;
             //popUpCanvasGroup.SetActive(true);
             popUpText.text = "<size=20>Press ENTER to go to:\n<size=30>| " + roomName + " | ";
+
+            GetComponent<AudioSource>().PlayOneShot(playerPrompt);
 
         }
     }

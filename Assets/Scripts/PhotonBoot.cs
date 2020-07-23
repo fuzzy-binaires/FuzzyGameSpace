@@ -22,6 +22,8 @@ public class PhotonBoot : MonoBehaviourPunCallbacks
     {
         Instance = this;
         Connect();
+
+        GetComponent<AudioSource>().playOnAwake = false;
     }
 
     public void Connect()
@@ -75,6 +77,8 @@ public class PhotonBoot : MonoBehaviourPunCallbacks
         GameObject player;
         player = PhotonNetwork.Instantiate("Player/Player_LED", new Vector3(0f, 0f, 0f), Quaternion.identity, 0);
         player.gameObject.tag = "Player";
+
+
 
         connectedToRoom = true;
 

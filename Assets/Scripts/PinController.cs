@@ -41,6 +41,7 @@ public class PinController : SingletonMonoBehaviour<PinController>
     static string uploadPath() => "http://fuzzy-binaires.org/borders_flask_server/pindata_to_server";
 
 
+    public AudioClip gizmoSwitching;
 
     #region Startup
 
@@ -274,6 +275,9 @@ public class PinController : SingletonMonoBehaviour<PinController>
         {
             pinSelectedGizmo.transform.position = pin.pinGO.transform.position + new Vector3(0f, gizmoHeight, 0f);
         }
+
+        GetComponent<AudioSource>().PlayOneShot(gizmoSwitching);
+
     }
 
     [Button] // FROM NAUGHTYATTRIBUTES
