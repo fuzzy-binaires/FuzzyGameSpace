@@ -23,7 +23,6 @@ public class PhotonBoot : MonoBehaviourPunCallbacks
         Instance = this;
         Connect();
 
-        GetComponent<AudioSource>().playOnAwake = false;
     }
 
     public void Connect()
@@ -34,7 +33,7 @@ public class PhotonBoot : MonoBehaviourPunCallbacks
 
     public override void OnConnectedToMaster()
     {
-        Debug.Log("Photon: ConnectedToMaster -> " + PhotonNetwork.CloudRegion + ", " + PhotonNetwork.CurrentCluster);
+        //Debug.Log("Photon: ConnectedToMaster -> " + PhotonNetwork.CloudRegion + ", " + PhotonNetwork.CurrentCluster);
 
         // get username and add a unique random ID 
         //Debug.Log("input conncetion values" + PlayerPrefs.GetString(LogInController.userName_Pointer) + PlayerPrefs.GetString(LogInController.userColor_Pointer));
@@ -46,7 +45,7 @@ public class PhotonBoot : MonoBehaviourPunCallbacks
 
     public override void OnJoinedLobby()
     {
-        Debug.Log("Photon: OnJoinedLobby -> " + PhotonNetwork.CurrentLobby);
+        //Debug.Log("Photon: OnJoinedLobby -> " + PhotonNetwork.CurrentLobby);
 
         RoomOptions roomOptions = new RoomOptions();
         roomOptions.IsVisible = true;
@@ -65,11 +64,11 @@ public class PhotonBoot : MonoBehaviourPunCallbacks
     public override void OnJoinedRoom()
     {
 
-        Debug.Log("Photon: OnJoinedRoom -> " + PhotonNetwork.CurrentRoom);
+        //Debug.Log("Photon: OnJoinedRoom -> " + PhotonNetwork.CurrentRoom);
 
         if (connectedToRoom)
         {
-            Debug.Log("already connected?");
+            //Debug.Log("already connected?");
             return;
         }
 
@@ -86,12 +85,12 @@ public class PhotonBoot : MonoBehaviourPunCallbacks
 
     public override void OnPlayerEnteredRoom(Player newPlayer)
     {
-        Debug.Log("User joined!");
+        //Debug.Log("User joined!");
     }
 
     public override void OnPlayerLeftRoom(Player otherPlayer)
     {
-        Debug.Log("User left!");
+        //Debug.Log("User left!");
     }
 
 

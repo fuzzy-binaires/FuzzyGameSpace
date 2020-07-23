@@ -30,7 +30,7 @@ public class PhotonPlayerController : MonoBehaviour
 
         if (photonView == null)
         {
-            Debug.LogError("PhotonPlayerController::Start photonView is null!!!");
+            //Debug.LogError("PhotonPlayerController::Start photonView is null!!!");
         }
 
         if (photonView.IsMine)
@@ -51,14 +51,14 @@ public class PhotonPlayerController : MonoBehaviour
         string nickname = "test_user";
         if (photonView.Owner == null || photonView.Owner.NickName == null)
         {
-            Debug.LogError("PhotonPlayerController::Start photonView.Owner is null!!!");
+            //Debug.LogError("PhotonPlayerController::Start photonView.Owner is null!!!");
         }
         else
         {
 
             if (string.IsNullOrEmpty(photonView.Owner.NickName) || (photonView.Owner.NickName.Length - 3) <= 0)
             {
-                Debug.Log("Username " + photonView.Owner.NickName + " is too short");
+                //Debug.Log("Username " + photonView.Owner.NickName + " is too short");
 
             }
             else
@@ -72,7 +72,7 @@ public class PhotonPlayerController : MonoBehaviour
         string username = nickname.Substring(0, nickname.Length - 3);
         string usercolor = nickname.Substring(nickname.Length - 3, 3);
 
-        Debug.Log("User joined! " + "username: " + username + " usercolor: " + usercolor);
+        //Debug.Log("User joined! " + "username: " + username + " usercolor: " + usercolor);
         userName.text = username;
         gameObject.name = "Player_" + username;
 
@@ -94,6 +94,7 @@ public class PhotonPlayerController : MonoBehaviour
     public void LightOn()
     {
         LED_Head_Capsule.material.SetColor("_EmissionColor", Color.Lerp(Color.white, playerColor, 0.5f));
+        AudioController.playPlayerLight();
     }
 
     [PunRPC] // make this function shared among networked participants

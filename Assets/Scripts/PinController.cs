@@ -40,9 +40,7 @@ public class PinController : SingletonMonoBehaviour<PinController>
     static string serverPath() => "http://fuzzy-binaires.org/borders_flask_server/pindata_to_server";
     static string uploadPath() => "http://fuzzy-binaires.org/borders_flask_server/pindata_to_server";
 
-
-    public AudioClip gizmoSwitching;
-
+    
     #region Startup
 
   
@@ -57,7 +55,7 @@ public class PinController : SingletonMonoBehaviour<PinController>
 
     public void Setup(string username)
     {
-        Debug.Log("--- Setup the pinController for: " + username);
+        //Debug.Log("--- Setup the pinController for: " + username);
         // loads all local pins in the Scene
         loadPins();
 
@@ -120,7 +118,7 @@ public class PinController : SingletonMonoBehaviour<PinController>
 
             if (webRequest.isNetworkError)
             {
-                Debug.LogError(pages[page] + ": Error: " + webRequest.error);
+                //Debug.LogError(pages[page] + ": Error: " + webRequest.error);
             }
             else
             {
@@ -276,7 +274,8 @@ public class PinController : SingletonMonoBehaviour<PinController>
             pinSelectedGizmo.transform.position = pin.pinGO.transform.position + new Vector3(0f, gizmoHeight, 0f);
         }
 
-        GetComponent<AudioSource>().PlayOneShot(gizmoSwitching);
+        //GetComponent<AudioSource>().PlayOneShot(gizmoSwitching);
+        AudioController.playPinGizmo();
 
     }
 
@@ -293,7 +292,7 @@ public class PinController : SingletonMonoBehaviour<PinController>
 
         // TO FILE
         string json = JsonUtility.ToJson(pinDataEditor);
-        Debug.Log("Updated local database: " + json);
+        //Debug.Log("Updated local database: " + json);
 
         StartCoroutine(UploadData(json, OnUploadedDatabase));
     }
@@ -308,14 +307,14 @@ public class PinController : SingletonMonoBehaviour<PinController>
     // share updates Pin info on the network at runtime
     public void UpdatedPinDescription(string pinName, string text)
     {
-        Debug.Log("UpdatedPinDescription is: " + "pinName: " + pinName + " text: " + text);
+        //Debug.Log("UpdatedPinDescription is: " + "pinName: " + pinName + " text: " + text);
 
         // local database
         PinData.PinDescription pinDes = pinDataEditor.GetPinDescription(pinName);
         if (pinDes != null)
         {
             pinDes.text = text;
-            Debug.Log("PinDescription found, new text is: " + pinDes.text);
+            //Debug.Log("PinDescription found, new text is: " + pinDes.text);
         }
 
         // local pin GameObject
@@ -337,8 +336,8 @@ public class PinController : SingletonMonoBehaviour<PinController>
 
     IEnumerator UploadData(string jsonString, Action callback)
     {
-        Debug.Log("----||| TRYING TO UPLOAD DATA ");
-        Debug.Log(jsonString);
+        //Debug.Log("----||| TRYING TO UPLOAD DATA ");
+        //Debug.Log(jsonString);
 
         WWWForm form = new WWWForm();
         form.AddField("fieldWithJsonString", jsonString);
@@ -353,7 +352,7 @@ public class PinController : SingletonMonoBehaviour<PinController>
             }
             else
             {
-                Debug.Log("Form upload complete!");
+                //Debug.Log("Form upload complete!");
                 callback();
             }
         }
