@@ -153,7 +153,7 @@ public class PUN2_Chat : MonoBehaviourPun
           var message = string.Format ("{0}", FormatEmoji(TMP_ChatInput.text));
 
          var timeNow = System.DateTime.Now;
-         string formated_message =  "<size=60%> <#FFFF80>" + timeNow.Hour.ToString("d2") +
+         string formated_message =  "<size=30> <color=#0000FF>" + timeNow.Hour.ToString("d2") +
         ":" + timeNow.Minute.ToString("d2") +
         ":" + timeNow.Second.ToString("d2") + "</color> " +
         " <#FFFF80>" + playerName +  "</color> says: " +

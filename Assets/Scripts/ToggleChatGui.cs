@@ -23,7 +23,7 @@ public class ToggleChatGui : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-       if (!isChatGuiVisible && insideCollider && Input.GetKeyUp(KeyCode.Return)){
+       if (!isChatGuiVisible && insideCollider && Input.GetKeyUp(KeyCode.T)){
                isChatGuiVisible = true;
                ChatCanvasGroup.SetActive(true);
              
@@ -38,7 +38,7 @@ public class ToggleChatGui : MonoBehaviour
     void OnGUI(){
        if (insideCollider && !isChatGuiVisible){
            
-           GUI.Label(new Rect(5, Screen.height - 30, 200, 30), "Press enter to chat", guiStyle);
+           GUI.Label(new Rect(5, Screen.height - 30, 200, 30), "Press 't' to chat", guiStyle);
        }
     }
 
