@@ -74,7 +74,7 @@ public class PhotonBoot : MonoBehaviourPunCallbacks
 
         // settings for networked objects such as player
         GameObject player;
-        player = PhotonNetwork.Instantiate("Player/Player_LED", new Vector3(0f, 0f, 0f), Quaternion.identity, 0);
+        player = PhotonNetwork.Instantiate("Player/Player_LED", new Vector3(4.694f, 0f, -0.25f), Quaternion.identity, 0);
         player.gameObject.tag = "Player";
 
 

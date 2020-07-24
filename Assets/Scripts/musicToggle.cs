@@ -27,5 +27,9 @@ public class musicToggle : MonoBehaviour
     void toogleMusicPlaying(Toggle change)
     {
         AudioController.switchAmbientMusic(change.isOn);
+
+        // Little hack to unFocus the element (pressing spaceBar would switch it back again)
+        change.interactable = false;
+        change.interactable = true;
     }
 }
