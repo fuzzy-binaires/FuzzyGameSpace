@@ -9,6 +9,8 @@ public class AudioController : MonoBehaviour
 
     public static List<AudioClip> audioClips;
     static public AudioSource fxsSource;
+    static public AudioSource musicSource;
+
 
     // Start is called before the first frame update
     void Awake()
@@ -20,6 +22,10 @@ public class AudioController : MonoBehaviour
         fxsSource = GetComponents<AudioSource>()[1];
         //Debug.Log(GetComponents<AudioSource>());
         audioClips = GetComponent<AudioPool>().audioClips;
+
+        musicSource = GetComponents<AudioSource>()[0];
+
+
     }
 
     // Update is called once per frame
@@ -64,4 +70,15 @@ public class AudioController : MonoBehaviour
         fxsSource.PlayOneShot(audioClips[5]);
     }
 
+    static public void switchAmbientMusic(bool state)
+    {
+        if (state)
+        {
+            musicSource.UnPause();
+        }
+        else
+        {
+            musicSource.Pause();
+        }
+    }
 }
