@@ -40,6 +40,7 @@ public class PUN2_Chat : MonoBehaviourPun
     }
 
     List<ChatMessage> chatMessages = new List<ChatMessage>();
+    private string playerName = "";
 
     //--------------------------------------------------------------------------
     void DisplayMeshTextBox(){
@@ -95,6 +96,10 @@ public class PUN2_Chat : MonoBehaviourPun
     {
       Debug.Log("Chat start");
 
+      
+      playerName = PlayerPrefs.GetString("userName");
+
+      
 
         //Initialize Photon View
         if(gameObject.GetComponent<PhotonView>() == null)
@@ -147,7 +152,14 @@ public class PUN2_Chat : MonoBehaviourPun
         {
           var message = string.Format ("{0}", FormatEmoji(TMP_ChatInput.text));
 
-          photonView.RPC("SendChat", RpcTarget.All, PhotonNetwork.LocalPlayer, message);
+         var timeNow = System.DateTime.Now;
+         string formated_message =  "<size=60%> <#FFFF80>" + timeNow.Hour.ToString("d2") +
+        ":" + timeNow.Minute.ToString("d2") +
+        ":" + timeNow.Second.ToString("d2") + "</color> " +
+        " <#FFFF80>" + playerName +  "</color> says: " +
+        message;
+
+          photonView.RPC("SendChat", RpcTarget.All, PhotonNetwork.LocalPlayer, formated_message);
 
           if (playlistCollider.GetComponent<ToggleMusicGui>().MusicPlayerCanvasGroup.activeSelf){
               photonView.RPC("PostLink", RpcTarget.All, PhotonNetwork.LocalPlayer, playlistCollider.GetComponent<CustomButtonList>().GetInputUrl());//InputFieldUrlLink.text);
@@ -176,19 +188,14 @@ public class PUN2_Chat : MonoBehaviourPun
     {
         ChatMessage m = new ChatMessage();
         m.sender = sender.NickName;
-        var timeNow = System.DateTime.Now;
+        Debug.Log(m.sender + "!!!!!!!");
 
-        Debug.Log(m.message);
 
         //Display player NickName otherwise just use the player id from PUN
-        string playerName = (PhotonNetwork.LocalPlayer.NickName == "") ?
-          PhotonNetwork.AuthValues.UserId : PhotonNetwork.LocalPlayer.NickName;
+        //string playerName = (PhotonNetwork.LocalPlayer.NickName == "") ?
+        //  PhotonNetwork.AuthValues.UserId : PhotonNetwork.LocalPlayer.NickName;
 
-        m.message = "<size=60%> <#FFFF80>" + timeNow.Hour.ToString("d2") +
-        ":" + timeNow.Minute.ToString("d2") +
-        ":" + timeNow.Second.ToString("d2") + "</color> " +
-        " <#FFFF80>" + playerName +  "</color> " +
-        message;
+        m.message = message;
         //
         m.timer = 50.0f;
 

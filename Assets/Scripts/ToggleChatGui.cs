@@ -9,17 +9,21 @@ public class ToggleChatGui : MonoBehaviour
 
    private bool insideCollider = false;
    public GameObject ChatCanvasGroup;
+
+   private GUIStyle guiStyle = new GUIStyle(); 
     // Start is called before the first frame update
     void Awake()
     {
       ChatCanvasGroup = GameObject.Find("ChatCanvasGroup");
+      guiStyle.fontSize = 30; 
+      guiStyle.normal.textColor = Color.red;
 
     }
 
     // Update is called once per frame
     void Update()
     {
-       if (!isChatGuiVisible && insideCollider && Input.GetKeyUp(KeyCode.T)){
+       if (!isChatGuiVisible && insideCollider && Input.GetKeyUp(KeyCode.Return)){
                isChatGuiVisible = true;
                ChatCanvasGroup.SetActive(true);
              
@@ -33,8 +37,8 @@ public class ToggleChatGui : MonoBehaviour
 
     void OnGUI(){
        if (insideCollider && !isChatGuiVisible){
-          
-           GUI.Label(new Rect(5, Screen.height - 25, 200, 25), "Press 'T' to chat");
+           
+           GUI.Label(new Rect(5, Screen.height - 30, 200, 30), "Press enter to chat", guiStyle);
        }
     }
 
