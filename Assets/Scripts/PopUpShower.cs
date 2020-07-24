@@ -48,6 +48,7 @@ public class PopUpShower : MonoBehaviour
 
                 //GetComponent<AudioSource>().PlayOneShot(playerEnter);
                 AudioController.playConnectorEnter();
+                AudioController.switchAmbientMusic(false);
 
                 OpenBrowserTabJS(webURLName);
                 playerIsDeciding = false;
