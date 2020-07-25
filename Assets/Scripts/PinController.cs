@@ -322,7 +322,7 @@ public class PinController : SingletonMonoBehaviour<PinController>
             {
                 if (AllPins[i].pinConnector == null)
                 {
-                    createRuntimePinContent(AllPins[i], text, 0f);
+                    createStartupPinContent(AllPins[i], text, 0f);
                 }
                 
                 AllPins[i].Text = text;
