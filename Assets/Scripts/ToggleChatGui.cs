@@ -72,8 +72,8 @@ public class ToggleChatGui : MonoBehaviour
        if(other.CompareTag("Player"))
        {
           insideCollider = false;
-          
-       }
+          popUpText.text = "";
+        }
 
     }
 }

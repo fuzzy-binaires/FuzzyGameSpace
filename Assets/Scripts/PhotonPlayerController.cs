@@ -204,7 +204,6 @@ public class PhotonPlayerController : MonoBehaviour
 
     private void constraintToBoard()
     {
-        //transform.position.x >= -5 && transform.position.x <= 5 && transform.position.z >= -2.5f && transform.position.z <= 2.5f;
         Vector3 pos = transform.position;
         pos.x = Mathf.Clamp(pos.x, -5, 5);
         pos.z = Mathf.Clamp(pos.z, -2.5f, 2.5f);
