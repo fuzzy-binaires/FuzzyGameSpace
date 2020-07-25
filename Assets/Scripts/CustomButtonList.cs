@@ -47,7 +47,7 @@ public class CustomButtonList : MonoBehaviour
 
         GameObject goButton = (GameObject)Instantiate(prefabButton);
         goButton.transform.SetParent(ParentPanel, false);
-        var horizontalOffset = (buttonCount > 1) ? 460 : 0;
+        var horizontalOffset = (buttonCount > 1) ? 420 : 0;
         goButton.transform.localPosition = new Vector2(horizontalOffset,offSetHeight+buttonCount*-60);
         goButton.transform.localScale = new Vector3(1, 1, 1);
         
