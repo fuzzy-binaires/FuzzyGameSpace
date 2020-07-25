@@ -244,7 +244,7 @@ RectTransform:
   - {fileID: 688941093}
   - {fileID: 720944450}
   m_Father: {fileID: 0}
-  m_RootOrder: 6
+  m_RootOrder: 5
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 0, y: 0}
@@ -1050,7 +1050,7 @@ MonoBehaviour:
   m_HandleRect: {fileID: 637486940}
   m_Direction: 2
   m_Value: 0
-  m_Size: 0.91689295
+  m_Size: 0.9999564
   m_NumberOfSteps: 0
   m_OnValueChanged:
     m_PersistentCalls:
@@ -1309,7 +1309,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 1}
   m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: 0.000015258789, y: 7.8790445}
+  m_AnchoredPosition: {x: 0.000015258789, y: 0.0011254736}
   m_SizeDelta: {x: 0, y: 300}
   m_Pivot: {x: 0, y: 1}
 --- !u!1 &298830883
@@ -3191,7 +3191,7 @@ Transform:
   m_Children:
   - {fileID: 1529274595}
   m_Father: {fileID: 0}
-  m_RootOrder: 10
+  m_RootOrder: 9
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &720944449
 GameObject:
@@ -3277,7 +3277,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
-  m_Color: {r: 1, g: 1, b: 1, a: 0.392}
+  m_Color: {r: 1, g: 1, b: 1, a: 0.92941177}
   m_RaycastTarget: 1
   m_OnCullStateChanged:
     m_PersistentCalls:
@@ -3848,7 +3848,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 5
+  m_RootOrder: 4
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &887230366
 MonoBehaviour:
@@ -3863,7 +3863,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   TMP_ChatInput: {fileID: 688941094}
-  InputFieldUrlLink: {fileID: 0}
+  InputFieldUrlLink: {fileID: 6024572958142703173, guid: 1a666625a9697480096a7b595e426c99,
+    type: 3}
   TMP_ChatOutput: {fileID: 234293303}
   ChatScrollView: {fileID: 720944451}
 --- !u!1 &888038904
@@ -4451,7 +4452,7 @@ PrefabInstance:
     - target: {fileID: 6024572958142703170, guid: 1a666625a9697480096a7b595e426c99,
         type: 3}
       propertyPath: m_AnchoredPosition.y
-      value: -57
+      value: -71.1
       objectReference: {fileID: 0}
     - target: {fileID: 6024572958142703170, guid: 1a666625a9697480096a7b595e426c99,
         type: 3}
@@ -4934,7 +4935,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 0, y: 106}
+  m_AnchoredPosition: {x: 0, y: 250}
   m_SizeDelta: {x: 100, y: 100}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1304017491
@@ -4964,8 +4965,8 @@ MonoBehaviour:
   m_fontMaterials: []
   m_fontColor32:
     serializedVersion: 2
-    rgba: 4282376314
-  m_fontColor: {r: 0.47843137, g: 0.8784314, b: 0.24705882, a: 1}
+    rgba: 4281710950
+  m_fontColor: {r: 0.39862165, g: 0.7264151, b: 0.20901564, a: 1}
   m_enableVertexGradient: 0
   m_colorMode: 3
   m_fontColorGradient:
@@ -4983,8 +4984,8 @@ MonoBehaviour:
   m_outlineColor:
     serializedVersion: 2
     rgba: 4278190080
-  m_fontSize: 20
-  m_fontSizeBase: 20
+  m_fontSize: 40
+  m_fontSizeBase: 40
   m_fontWeight: 400
   m_enableAutoSizing: 0
   m_fontSizeMin: 18
@@ -5021,7 +5022,7 @@ MonoBehaviour:
   m_firstVisibleCharacter: 0
   m_useMaxVisibleDescender: 1
   m_pageToDisplay: 1
-  m_margin: {x: -219.79858, y: 0, z: -218.31055, w: 19.43692}
+  m_margin: {x: -434.20517, y: 0, z: -436.68726, w: 19.43692}
   m_textInfo:
     textComponent: {fileID: 1304017491}
     characterCount: 28
@@ -5153,7 +5154,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 7
+  m_RootOrder: 6
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1333086032
 GameObject:
@@ -5455,7 +5456,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 8
+  m_RootOrder: 7
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1429631477
 GameObject:
@@ -5625,7 +5626,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   isChatGuiVisible: 0
-  ChatCanvasGroup: {fileID: 0}
+  ChatCanvasGroup: {fileID: 8588266}
+  popUpText: {fileID: 0}
 --- !u!1 &1487399058 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 5043551699854988776, guid: c05df9d58392a4759aaaa2b70e96754d,
@@ -6059,7 +6061,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 13
+  m_RootOrder: 12
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1599918208
 GameObject:
@@ -6184,7 +6186,7 @@ RectTransform:
   m_Children:
   - {fileID: 2003780314}
   m_Father: {fileID: 0}
-  m_RootOrder: 9
+  m_RootOrder: 8
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 0, y: 0}
@@ -8103,49 +8105,6 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2051908580}
   m_CullTransparentMesh: 0
---- !u!1 &2060130310
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 2060130312}
-  - component: {fileID: 2060130311}
-  m_Layer: 0
-  m_Name: database
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!114 &2060130311
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2060130310}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 98f98531359df41c3824bf899a7242b6, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
---- !u!4 &2060130312
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2060130310}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0.2215507, y: 0.075831056, z: -0.59829843}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_Children: []
-  m_Father: {fileID: 0}
-  m_RootOrder: 4
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &2069831312
 GameObject:
   m_ObjectHideFlags: 0
@@ -8275,7 +8234,7 @@ MonoBehaviour:
   popUpCanvasGroup: {fileID: 0}
   playerIsDeciding: 0
   roomName: THE WORKSHOPS
-  webURLName: workshopsRoom
+  webURLName: workshopRoom
 --- !u!65 &2086076851
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -8650,7 +8609,7 @@ PrefabInstance:
     - target: {fileID: 4848067409504350200, guid: e7ced79137cd246f3ba0605e32299c13,
         type: 3}
       propertyPath: m_RootOrder
-      value: 12
+      value: 11
       objectReference: {fileID: 0}
     - target: {fileID: 4848067409504350200, guid: e7ced79137cd246f3ba0605e32299c13,
         type: 3}
@@ -8724,7 +8683,7 @@ PrefabInstance:
     - target: {fileID: 5043551699695727523, guid: c05df9d58392a4759aaaa2b70e96754d,
         type: 3}
       propertyPath: m_RootOrder
-      value: 11
+      value: 10
       objectReference: {fileID: 0}
     - target: {fileID: 5043551699695727523, guid: c05df9d58392a4759aaaa2b70e96754d,
         type: 3}

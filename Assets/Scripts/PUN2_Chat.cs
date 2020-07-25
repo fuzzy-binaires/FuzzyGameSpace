@@ -148,15 +148,18 @@ public class PUN2_Chat : MonoBehaviourPun
   void OnGUI()
     {
 
-        if (Event.current.type == EventType.KeyDown && Event.current.keyCode == KeyCode.Return)
+        if (Event.current.type == EventType.KeyDown && Event.current.keyCode == KeyCode.Return && 
+        chatRoomCollider.GetComponent<ToggleChatGui>().ChatCanvasGroup.activeSelf)// && string.IsNullOrEmpty(TMP_ChatInput.text))
         {
+          
+          
           var message = string.Format ("{0}", FormatEmoji(TMP_ChatInput.text));
 
          var timeNow = System.DateTime.Now;
-         string formated_message =  "<size=30> <color=#0000FF>" + timeNow.Hour.ToString("d2") +
+         string formated_message = "<size=30> <color=#A9A40C>" + timeNow.Hour.ToString("d2") +
         ":" + timeNow.Minute.ToString("d2") +
         ":" + timeNow.Second.ToString("d2") + "</color> " +
-        " <#FFFF80>" + playerName +  "</color> says: " +
+        " <#89A46A>" + playerName +  "</color> says: " +
         message;
 
           photonView.RPC("SendChat", RpcTarget.All, PhotonNetwork.LocalPlayer, formated_message);

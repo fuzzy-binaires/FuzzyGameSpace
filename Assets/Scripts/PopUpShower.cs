@@ -68,7 +68,7 @@ public class PopUpShower : MonoBehaviour
 
             playerIsDeciding = true;
             //popUpCanvasGroup.SetActive(true);
-            popUpText.text = "<size=20>Press ENTER to go to:\n<size=30>| " + roomName + " | ";
+            popUpText.text = "<size=30>Press ENTER to go to:\n<size=50>| " + roomName + " | ";
 
             //GetComponent<AudioSource>().PlayOneShot(playerPrompt);
             AudioController.playConnectorPrompt();
