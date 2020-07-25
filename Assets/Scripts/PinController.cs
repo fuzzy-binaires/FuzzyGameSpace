@@ -272,11 +272,8 @@ public class PinController : SingletonMonoBehaviour<PinController>
         else
         {
             pinSelectedGizmo.transform.position = pin.pinGO.transform.position + new Vector3(0f, gizmoHeight, 0f);
+            AudioController.playPinGizmo();
         }
-
-        //GetComponent<AudioSource>().PlayOneShot(gizmoSwitching);
-        AudioController.playPinGizmo();
-
     }
 
     [Button] // FROM NAUGHTYATTRIBUTES
