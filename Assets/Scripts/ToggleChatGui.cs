@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using TMPro;
 
 public class ToggleChatGui : MonoBehaviour
 {
@@ -10,6 +11,8 @@ public class ToggleChatGui : MonoBehaviour
    private bool insideCollider = false;
    public GameObject ChatCanvasGroup;
 
+   public TMP_Text popUpText;
+
    private GUIStyle guiStyle = new GUIStyle(); 
     // Start is called before the first frame update
     void Awake()
@@ -17,6 +20,9 @@ public class ToggleChatGui : MonoBehaviour
       ChatCanvasGroup = GameObject.Find("ChatCanvasGroup");
       guiStyle.fontSize = 30; 
       guiStyle.normal.textColor = Color.red;
+      GameObject popUpTextGO = GameObject.Find("RoomConfirmPopUp/Canvas/popUpText").gameObject;
+      popUpText = popUpTextGO.GetComponent<TMP_Text>();
+      popUpText.text = "";
 
     }
 
@@ -38,7 +44,16 @@ public class ToggleChatGui : MonoBehaviour
     void OnGUI(){
        if (insideCollider && !isChatGuiVisible){
            
-           GUI.Label(new Rect(5, Screen.height - 30, 200, 30), "Press 't' to chat", guiStyle);
+          //GUI.Label(new Rect(5, Screen.height - 30, 200, 30), "Press 't' to chat", guiStyle);
+
+         if (Input.GetKeyUp(KeyCode.T))
+        {
+            popUpText.text = "";
+
+        } else {
+            popUpText.text = "<size=20>Press 't' to go to:\n<size=30>| Chat | ";
+        }
+        
        }
     }
 
