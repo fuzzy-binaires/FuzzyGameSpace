@@ -19,13 +19,16 @@ public class CustomButtonList : MonoBehaviour
 
 
     public int buttonCount = 0;
+
+    private int offSetHeight = -60;
    
     // Use this for initialization
     void Awake () {
 
         GameObject goInputField = (GameObject)Instantiate(prefabInputField);
+        //goInputField.transform.SetParent(ParentPanel.GetComponent<ScrollRect>().viewport.content, false);
         goInputField.transform.SetParent(ParentPanel, false);
-        goInputField.transform.localPosition = new Vector2(0,buttonCount*20);
+        goInputField.transform.localPosition = new Vector2(0,offSetHeight+buttonCount*20);
         goInputField.transform.localScale = new Vector3(1, 1, 1);
 
         inputUrlTMP = goInputField.GetComponent<TMP_InputField>();
@@ -44,7 +47,8 @@ public class CustomButtonList : MonoBehaviour
 
         GameObject goButton = (GameObject)Instantiate(prefabButton);
         goButton.transform.SetParent(ParentPanel, false);
-        goButton.transform.localPosition = new Vector2(0,buttonCount*-20);
+        var horizontalOffset = (buttonCount > 1) ? 460 : 0;
+        goButton.transform.localPosition = new Vector2(horizontalOffset,offSetHeight+buttonCount*-60);
         goButton.transform.localScale = new Vector3(1, 1, 1);
         
         
