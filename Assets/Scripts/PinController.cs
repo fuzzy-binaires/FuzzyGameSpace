@@ -233,6 +233,7 @@ public class PinController : SingletonMonoBehaviour<PinController>
             {
                 selectedPin.Text = pinInputText.text;
                 savePinDataToFile();
+                AudioController.playPinWrite();
             }
 
         }
