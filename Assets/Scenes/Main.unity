@@ -2235,7 +2235,7 @@ MonoBehaviour:
   m_HandleRect: {fileID: 637486940}
   m_Direction: 2
   m_Value: 0
-  m_Size: 0.99999434
+  m_Size: 1
   m_NumberOfSteps: 0
   m_OnValueChanged:
     m_PersistentCalls:
@@ -2626,7 +2626,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 1}
   m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: 0.000015258789, y: 0.00092520774}
+  m_AnchoredPosition: {x: 0.000015258789, y: 0.0005058207}
   m_SizeDelta: {x: 0, y: 300}
   m_Pivot: {x: 0, y: 1}
 --- !u!1 &298830883
@@ -8519,13 +8519,14 @@ MonoBehaviour:
   m_GameObject: {fileID: 1225999245}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 0d5c89c2100000000f6c89c210000000, type: 3}
+  m_Script: {fileID: 11500000, guid: 0b5695721000000009d6957210000000, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   AllPinsContainer: {fileID: 1604069231}
   pinSelectedGizmo: {fileID: 2064452731}
   pinGui: {fileID: 538280492}
   pinInputText: {fileID: 6451243}
+  audioController: {fileID: 1473867318}
   pinDataEditor:
     pinDescriptions: []
   pinContentPrefab: {fileID: 0}
@@ -15125,6 +15126,6 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 1}
   m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: 0, y: 300}
+  m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 0, y: 300}
   m_Pivot: {x: 0, y: 1}
