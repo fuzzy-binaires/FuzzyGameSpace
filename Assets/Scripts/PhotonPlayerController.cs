@@ -128,10 +128,12 @@ public class PhotonPlayerController : MonoBehaviour
         }
 
 
-        
+
         // we prevent movement while a UI element is in focus – we can move only one frame after the UI usage
         if (Time.frameCount > UIInFocusLastFrame)
         {
+
+
             Vector2 moveInput = Vector2.zero;
 
             // moving the player according to Keyboard Input
@@ -164,9 +166,13 @@ public class PhotonPlayerController : MonoBehaviour
                 pos += direction.RemoveDiagonal().normalized * Time.deltaTime; // map the inputs onto the grid 
 
                 transform.position = pos;
+
+                constraintToBoard();
+
             }
             playerRB.velocity = Vector3.zero;
         }
+
 
 
 
@@ -182,7 +188,8 @@ public class PhotonPlayerController : MonoBehaviour
         }
     }
 
-    public static void SetUIInFocusLastFrame() {
+    public static void SetUIInFocusLastFrame()
+    {
         UIInFocusLastFrame = Time.frameCount; // set current frameCount as last frame when UI is in focus
     }
 
@@ -193,6 +200,17 @@ public class PhotonPlayerController : MonoBehaviour
         //Debug.Log("Somebody changed a Pin: " + pinName + ", " + text);
 
         PinController.Instance.UpdatedPinDescription(pinName, text);
+    }
+
+    private void constraintToBoard()
+    {
+        //transform.position.x >= -5 && transform.position.x <= 5 && transform.position.z >= -2.5f && transform.position.z <= 2.5f;
+        Vector3 pos = transform.position;
+        pos.x = Mathf.Clamp(pos.x, -5, 5);
+        pos.z = Mathf.Clamp(pos.z, -2.5f, 2.5f);
+
+        transform.position = pos;
+
     }
 
 }

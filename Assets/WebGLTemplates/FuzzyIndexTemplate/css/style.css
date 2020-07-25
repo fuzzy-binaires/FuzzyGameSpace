@@ -1,0 +1,37 @@
+:root {
+	--back-color: rgb(169, 164, 12);
+	--primary-green: rgb(137, 164, 106);
+	font-size: 15px;
+}
+
+body {
+	width: 100%;
+	height: 100%;
+	text-align: center;
+	background-color: black;
+	font-family: 'Space Mono', monospace;
+}
+
+a{
+	color: white;
+}
+
+#subRegion {
+	margin-top: 10px;
+}
+
+.infoLine {
+	color: var(--primary-green);
+}
+
+.imageDiv{
+	top: 10px;
+	left: 30px;
+	display: inline;
+}
+
+#programmeName{
+	font-size: 20px;
+	color: var(--back-color);
+	margin: 10px 0;
+}
