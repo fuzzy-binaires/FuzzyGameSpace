@@ -51,7 +51,7 @@ public class ToggleChatGui : MonoBehaviour
             popUpText.text = "";
 
         } else {
-            popUpText.text = "<size=40>Press 't' to go to:\n<size=60>| Chat | ";
+            popUpText.text = "<size=40>Press <color=#FF2222>'t'</color> to go to:\n<size=60>| Chat | ";
         }
         
        }
