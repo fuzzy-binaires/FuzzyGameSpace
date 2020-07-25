@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 705507994}
-  m_IndirectSpecularColor: {r: 0.45135593, g: 0.5009364, b: 0.5727935, a: 1}
+  m_IndirectSpecularColor: {r: 0.45135576, g: 0.5009363, b: 0.5727934, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -2235,7 +2235,7 @@ MonoBehaviour:
   m_HandleRect: {fileID: 637486940}
   m_Direction: 2
   m_Value: 0
-  m_Size: 0.99968445
+  m_Size: 1
   m_NumberOfSteps: 0
   m_OnValueChanged:
     m_PersistentCalls:
@@ -2626,7 +2626,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 1}
   m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: 0.000015258789, y: 0.000035033547}
+  m_AnchoredPosition: {x: 0.000015258789, y: 0.0005058207}
   m_SizeDelta: {x: 0, y: 300}
   m_Pivot: {x: 0, y: 1}
 --- !u!1 &298830883
@@ -4686,13 +4686,13 @@ MonoBehaviour:
   m_margin: {x: 0, y: 0, z: 0, w: 0}
   m_textInfo:
     textComponent: {fileID: 637221988}
-    characterCount: 0
+    characterCount: 60
     spriteCount: 0
-    spaceCount: 0
-    wordCount: 0
+    spaceCount: 10
+    wordCount: 11
     linkCount: 0
-    lineCount: 0
-    pageCount: 0
+    lineCount: 1
+    pageCount: 1
     materialCount: 1
   m_isUsingLegacyAnimationComponent: 0
   m_isVolumetricText: 0
@@ -8519,13 +8519,14 @@ MonoBehaviour:
   m_GameObject: {fileID: 1225999245}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 0d5c89c2100000000f6c89c210000000, type: 3}
+  m_Script: {fileID: 11500000, guid: 0b5695721000000009d6957210000000, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   AllPinsContainer: {fileID: 1604069231}
   pinSelectedGizmo: {fileID: 2064452731}
   pinGui: {fileID: 538280492}
   pinInputText: {fileID: 6451243}
+  audioController: {fileID: 1473867318}
   pinDataEditor:
     pinDescriptions: []
   pinContentPrefab: {fileID: 0}
@@ -10247,7 +10248,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1473867313}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 1.0736018, y: 0.20309979, z: 0.05110766}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 543580358}
@@ -15125,6 +15126,6 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 1}
   m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: 0, y: 300}
+  m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 0, y: 300}
   m_Pivot: {x: 0, y: 1}

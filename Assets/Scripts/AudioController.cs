@@ -25,14 +25,9 @@ public class AudioController : MonoBehaviour
 
         musicSource = GetComponents<AudioSource>()[0];
 
-
     }
 
-    // Update is called once per frame
-    void Update()
-    {
-        
-    }
+
 
     static public void playConnectorPrompt()
     {
